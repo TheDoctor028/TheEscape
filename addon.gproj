@@ -1,0 +1,8 @@
+GameProject {
+ ID "TheEscapeEngine"
+ GUID "6909078E4F1824EE"
+ TITLE "The Escape - Engine"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+}
