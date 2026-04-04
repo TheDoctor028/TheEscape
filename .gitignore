@@ -1,0 +1,17 @@
+# Enfusion Basics
+*.pc
+.pc/
+*.bak
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+._*
+
+# IDEs
+.idea/
