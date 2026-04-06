@@ -46,14 +46,21 @@ class ESC_EscapeSpawnManager
 	
     static SCR_AIGroup SpawnPatrolAroundCoordinate(vector centerPoint, ResourceName groupPrefab, int waypointCount, float patrolRadius)
     {
+		
+		UUID groupID = UUID.GenV4();
+
         SCR_AIGroup aiGroup = SCR_AIGroup.Cast(ESC_Utils.SpawnEntity(groupPrefab, centerPoint));
 
         if (!aiGroup) return null;
+		
+		aiGroup.SetName("PatrolGroup_" + groupID);
 
-        Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: AI Group Spawned successfully at -> " + centerPoint.ToString());
+        Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: " + aiGroup.GetName() + " Spawned successfully at -> " + centerPoint.ToString());
 
 		float angleStep = (Math.PI * 2) / waypointCount;
-
+		
+		array<AIWaypoint> wps = {};
+		
 		for (int i = 0; i < waypointCount; i++)
 		{
 			float angle = angleStep * i;
@@ -61,20 +68,35 @@ class ESC_EscapeSpawnManager
 			float wpZ = centerPoint[2] + patrolRadius * Math.Cos(angle);
 			vector wpPos = Vector(wpX, centerPoint[1], wpZ);
 
-			ESC_WaypointType wpType = ESC_WaypointType.MOVE;
-			if (i == waypointCount - 1)
-				wpType = ESC_WaypointType.CYCLE;
-
-			AIWaypoint waypoint = ESC_Waypoints.SpawnWaypoint(wpType, wpPos);
-			if (waypoint)
-				aiGroup.AddWaypoint(waypoint);
+			AIWaypoint waypoint = ESC_Waypoints.SpawnWaypoint(ESC_WaypointType.PATROL, wpPos);
 			
-			Print(
-				"ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: Spawning waypoint " + i + " at -> " +
-				wpPos.ToString() + "(" + waypoint.GetName() + ")"
-			);
+			if (waypoint == null)
+			{
+				Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: Waypoint is null", LogLevel.ERROR);
+				return null;
+			}
+			
+			waypoint.SetName(aiGroup.GetName() + "_WP" + i);
+						
+			Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: Spawning patrol waypoint " + i + 
+			" at -> " +
+			 wpPos.ToString() + "(" + waypoint.GetName() + ")");
+			
+			wps.Insert(waypoint);
 		}
+		
+		// Create a cycle waypoint to add other waypoints
+		AIWaypointCycle cycle = AIWaypointCycle.Cast(ESC_Waypoints.SpawnWaypoint(ESC_WaypointType.CYCLE, centerPoint));
+		
+		cycle.SetName(aiGroup.GetName()+"_Cycle");
+		
+		Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: Spawning cycle waypoint at -> " +
+			 centerPoint.ToString() + "(" + cycle.GetName() + ")");
+		
+		cycle.SetWaypoints(wps);
 
+		aiGroup.AddWaypoint(cycle);
+		
         return aiGroup;
     }
 }

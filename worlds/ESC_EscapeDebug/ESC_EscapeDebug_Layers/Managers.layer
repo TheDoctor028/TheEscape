@@ -1,0 +1,15 @@
+SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Managers/Factions/FactionManager_USxUSSR.et" {
+ coords 6162.57 165.531 6432.272
+ Factions {
+  SCR_Faction "{56B2B46E999BF3BF}" {
+   m_bIsPlayable 0
+  }
+  SCR_Faction "{56B2B46E9AF80999}" {
+   m_bShowInWelcomeScreenIfNonPlayable 0
+  }
+ }
+ m_bCanChangeFactionsPlayable 0
+}
+SCR_LoadoutManager : "{97EF4C1A41F63DDB}Prefabs/MP/Managers/Loadouts/LoadoutManager_USxUSSR.et" {
+ coords 6163.851 165.531 6427.95
+}

@@ -13,11 +13,12 @@ class ESC_EscapeTestComponent : ScriptComponent
         Print("ESCAPE MODE: RUNNING SPAWN TESTS!", LogLevel.WARNING);
         
         // Test Option A: The Square
-        vector squareSpawn = ESC_EscapeSpawnManager.GetRandomSpawnInSquare(6164.0, 6164.0, 6428.0, 6428.0);
+        vector squareSpawn = ESC_EscapeSpawnManager.GetRandomSpawnInSquare(6164, 6165, 6428, 6429);
         
 		ESC_EscapeSpawnManager.SpawnMarkerAtLocation(squareSpawn, "{EC95FBEA75AE409B}Prefabs/Markers/MapMarkerDotCircle.et");
 		
-		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(squareSpawn, "{06F0C9675883F18A}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ReconTeam.et", 1, 100);
+		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(squareSpawn, 
+		"{06F0C9675883F18A}Prefabs/Groups/OPFOR/KLMK/Group_USSR_ReconTeam.et", 6, 50);
 		
         Print("=========================================", LogLevel.WARNING);
     }

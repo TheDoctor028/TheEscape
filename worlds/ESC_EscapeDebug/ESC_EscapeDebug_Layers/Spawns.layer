@@ -1,0 +1,7 @@
+SCR_SpawnPoint : "{4FEA25583D0975F7}Prefabs/MP/Spawning/SpawnPoint_USSR.et" {
+ coords 6165.219 165.531 6429.997
+}
+SCR_SpawnPoint : "{5A2220DD0C16958B}Prefabs/MP/Spawning/SpawnPoint_US.et" {
+ coords 6167.831 165.531 6426.307
+ m_bSpawnPointEnabled 0
+}

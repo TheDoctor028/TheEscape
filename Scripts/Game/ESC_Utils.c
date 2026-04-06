@@ -2,29 +2,35 @@ enum ESC_WaypointType
 {
 	MOVE,
 	PATROL,
+	CYCLE,
 }
 
 class ESC_Waypoints
 {
-	static Resource GetWaypointResource(ESC_WaypointType type)
+	
+	static ResourceName GetWaypointResourceName(ESC_WaypointType type)
 	{
 		switch(type)
 		{	
 			case ESC_WaypointType.MOVE:
-				return ESC_Utils.LoadAndCastRsrc("{750A8D1695BD6998}Prefabs/AI/Waypoints/AIWaypoint_Move.et");
+				return "{750A8D1695BD6998}Prefabs/AI/Waypoints/AIWaypoint_Move.et";
 			case ESC_WaypointType.PATROL:
-				return ESC_Utils.LoadAndCastRsrc("{22A875E30470BD4F}Prefabs/AI/Waypoints/AIWaypoint_Patrol.et");
+				return "{22A875E30470BD4F}Prefabs/AI/Waypoints/AIWaypoint_Patrol.et";
+			case ESC_WaypointType.CYCLE:
+				return "{35BD6541CBB8AC08}Prefabs/AI/Waypoints/AIWaypoint_Cycle.et";
 		}
 		
-		return ESC_Utils.LoadAndCastRsrc("{49CED34BBCD060F0}Prefabs/AI/Waypoints/AIWaypoint_Base.et");
+		return "{49CED34BBCD060F0}Prefabs/AI/Waypoints/AIWaypoint_Base.et";
+	}
+	
+	static Resource GetWaypointResource(ResourceName name)
+	{
+		return ESC_Utils.LoadResource(name);
 	}
 	
 	static AIWaypoint SpawnWaypoint(ESC_WaypointType type, vector postion)
 	{
-	
-		Resource wp = GetWaypointResource(type);
-		
-		AIWaypoint createdWP = AIWaypoint.Cast(ESC_Utils.SpawnEntity(wp ,postion));
+		AIWaypoint createdWP = AIWaypoint.Cast(ESC_Utils.SpawnEntity(GetWaypointResourceName(type) ,postion));
 		
 		if (createdWP == null)
 		{
@@ -40,17 +46,17 @@ class ESC_Waypoints
 
 class ESC_Utils
 {
-	static Resource LoadAndCastRsrc(ResourceName name)
+	static Resource LoadResource(ResourceName name)
 	{
 		Resource rsrc = Resource.Load(name);
 		
 		if (!rsrc.IsValid())
 		{
-			Print("ESC_Util.LoadAndCastRsrc: Faild to load resoruce: " + name, LogLevel.ERROR);
+			Print("ESC_Util.LoadResource: Faild to load resoruce: " + name, LogLevel.ERROR);
 			return null;
 		}
 	
-		return Resource.Cast(rsrc);
+		return rsrc;
 	}
 	
 	/*
