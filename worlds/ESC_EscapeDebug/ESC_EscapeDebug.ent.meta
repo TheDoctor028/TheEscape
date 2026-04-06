@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{CD6445F41F00FFD9}worlds/ESC_EscapeDebug/ESC_EscapeDebug.ent"
+ Configurations {
+  ENTResourceClass PC {
+  }
+  ENTResourceClass XBOX_ONE : PC {
+  }
+  ENTResourceClass XBOX_SERIES : PC {
+  }
+  ENTResourceClass PS4 : PC {
+  }
+  ENTResourceClass PS5 : PC {
+  }
+  ENTResourceClass HEADLESS : PC {
+  }
+ }
+}
