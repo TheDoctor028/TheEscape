@@ -52,12 +52,28 @@ class ESC_EscapeSpawnManager
 
         Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: AI Group Spawned successfully at -> " + centerPoint.ToString());
 
-		
+		float angleStep = (Math.PI * 2) / waypointCount;
+
 		for (int i = 0; i < waypointCount; i++)
 		{
+			float angle = angleStep * i;
+			float wpX = centerPoint[0] + patrolRadius * Math.Sin(angle);
+			float wpZ = centerPoint[2] + patrolRadius * Math.Cos(angle);
+			vector wpPos = Vector(wpX, centerPoint[1], wpZ);
+
+			ESC_WaypointType wpType = ESC_WaypointType.MOVE;
+			if (i == waypointCount - 1)
+				wpType = ESC_WaypointType.CYCLE;
+
+			AIWaypoint waypoint = ESC_Waypoints.SpawnWaypoint(wpType, wpPos);
+			if (waypoint)
+				aiGroup.AddWaypoint(waypoint);
 			
-		}		
-		
+			Print(
+				"ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate: Spawning waypoint " + i + " at -> " +
+				wpPos.ToString() + "(" + waypoint.GetName() + ")"
+			);
+		}
 
         return aiGroup;
     }
