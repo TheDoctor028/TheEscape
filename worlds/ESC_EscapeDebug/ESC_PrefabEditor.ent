@@ -1,0 +1,3 @@
+SubScene {
+ Parent "{70ABDE49D02BA4F4}worlds/Editor/PrefabEditing/PrefabEditingTool.ent"
+}

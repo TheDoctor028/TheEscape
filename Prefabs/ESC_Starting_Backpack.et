@@ -1,0 +1,22 @@
+GenericEntity {
+ ID "6910E1A9290F5890"
+ coords 6160.798 165.531 6430.694
+ {
+  GenericEntity : "{4805E67E2AE30F8D}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_M5.et" {
+   ID "6910E1A9290F5893"
+   components {
+    ESC_StartingBackpackComponent "{6910E1B14A679AFB}" {
+    }
+    SCR_UniversalInventoryStorageComponent "{5222CB03A40528FA}" {
+     InitialStorageSlots {
+      EquipmentStorageSlot test {
+      }
+     }
+    }
+    SCR_InventoryStorageManagerComponent "{6910E1B120E200BC}" {
+    }
+   }
+   coords 0 0 0
+  }
+ }
+}

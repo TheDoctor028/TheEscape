@@ -1,0 +1,120 @@
+GenericEntity {
+ ID "6910977BA7D56707"
+ coords -200.075 0.9 -200.114
+ {
+  GenericEntity : "{9DCC685B0943A9E3}Prefabs/Structures/BuildingParts/Doors/Door_Bars_A_LEFT_EXT_ST_B.et" {
+   ID "6910977BA7D381D4"
+   coords -4.925 -0.07 3.749
+   angles 0 90 0
+  }
+  $grp GenericEntity : "{A3A7C365E845B1B6}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_long_high_burlap.et" {
+   {
+    ID "6910977BA7D02F07"
+    coords -4.696 0.346 -3.054
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D04461"
+    coords 5.015 1.48 3.245
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D0CD03"
+    coords -4.869 -0.9 0.725
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D23094"
+    coords 5.013 1.437 0.269
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D2714C"
+    coords 2.96 1.463 4.425
+   }
+   {
+    ID "6910977BA7D2714D"
+    coords -3.498 1.308 -4.148
+   }
+   {
+    ID "6910977BA7D2D0FB"
+    coords -0.391 1.363 -4.144
+   }
+   {
+    ID "6910977BA7D2E967"
+    coords -4.802 -0.9 -3.089
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D3732B"
+    coords -4.747 0.299 0.161
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D3732C"
+    coords -4.798 -0.9 0.13
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D381D6"
+    coords -4.81 1.319 0.749
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D383AE"
+    coords -4.91 0.149 0.721
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D56703"
+    coords -3.451 1.346 4.262
+   }
+   {
+    ID "6910977BA7D596C5"
+    coords -0.237 1.415 4.345
+   }
+   {
+    ID "6910977BA7D596C6"
+    coords 4.978 1.376 -2.99
+    angles 0 90 0
+   }
+   {
+    ID "6910977BA7D596C7"
+    coords 2.774 1.367 -4.181
+   }
+   {
+    ID "6910977BA7D5F193"
+    coords -4.812 1.373 -2.416
+    angles 0 90 0
+   }
+  }
+  $grp GenericEntity : "{F6DFF6F368475611}Prefabs/ESC_Start_Sandbag_Wall.et" {
+   {
+    ID "6910977BA7D23089"
+    coords 4.488 -0.9 -4.223
+    {
+     GenericEntity {
+      ID "690EE5518D15CD4E"
+      coords -4.416 0.001 -0.01
+     }
+    }
+   }
+   {
+    ID "6910977BA7D2308B"
+    coords -4.605 -0.9 4.33
+    angles 0 180 0
+    {
+     GenericEntity {
+      ID "690EE5518D12BC32"
+      coords -1.263 1.232 0.062
+     }
+    }
+   }
+   {
+    ID "6910977BA7D381D7"
+    coords 5.047 -0.9 -4.23
+    angles 0 90 0
+   }
+  }
+ }
+}

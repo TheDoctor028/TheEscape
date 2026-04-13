@@ -1,0 +1,11 @@
+SCR_BaseTriggerEntity : "{CB12CAAB9291235C}Prefabs/ESC_ExtractionPoint.et" {
+ ID "691881CA97C0B171"
+ components {
+  ESC_EntityRegisterComponent "{691AB033BB0C9DBF}" {
+   m_type START_POINT
+  }
+ }
+ coords 5082.091 24.616 11959.681
+ DrawShape 0
+ ShapeColor 0.3176 0.5608 0.0706 1
+}

@@ -1,0 +1,32 @@
+GenericEntity {
+ ID "690EE5518D15B7DB"
+ coords 6 0 -202.136
+ {
+  $grp GenericEntity : "{A3A7C365E845B1B6}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_long_high_burlap.et" {
+   {
+    ID "690EE5518D123FF8"
+    coords -7.543 1.232 -0.05
+   }
+   {
+    ID "690EE5518D12BC32"
+    coords -1.263 1.232 0.043
+   }
+   {
+    ID "690EE5518D15B7D4"
+    coords -7.568 0.001 -0.057
+   }
+   {
+    ID "690EE5518D15B7D7"
+    coords -4.391 1.232 -0.003
+   }
+   {
+    ID "690EE5518D15CD4E"
+    coords -4.416 0.001 -0.01
+   }
+   {
+    ID "690EE5518D15CD4F"
+    coords -1.289 0.001 0.036
+   }
+  }
+ }
+}

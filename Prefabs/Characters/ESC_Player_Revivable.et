@@ -1,0 +1,15 @@
+SCR_ChimeraCharacter : "{8FB91B2024BFB5E0}Prefabs/Characters/ESC_Player.et" {
+ ID "6914ADB274438534"
+ components {
+  ActionsManagerComponent "{6914ADB1216223D3}" {
+   additionalActions {
+    ESC_ReviveUserAction "{6916A6503F3F4899}" {
+     ParentContextList {
+      "LowerTorso"
+     }
+    }
+   }
+  }
+ }
+ coords 6161.686 165.531 6432.312
+}

@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{A79B071D9F9C32CF}worlds/ESC_EscapeDebug/ESC_PrefabEditor.ent"
+ Configurations {
+  ENTResourceClass PC {
+  }
+  ENTResourceClass XBOX_ONE : PC {
+  }
+  ENTResourceClass XBOX_SERIES : PC {
+  }
+  ENTResourceClass PS4 : PC {
+  }
+  ENTResourceClass PS5 : PC {
+  }
+  ENTResourceClass HEADLESS : PC {
+  }
+ }
+}

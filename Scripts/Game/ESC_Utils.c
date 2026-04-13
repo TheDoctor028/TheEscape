@@ -1,3 +1,58 @@
+class ESC_Player
+{
+	protected int m_playerID;
+	protected int m_entityID;
+	protected ChimeraCharacter m_chimera;
+	protected string m_name;
+	
+	void ESC_Player(int playerID)
+	{
+		const PlayerManager pm = GetGame().GetPlayerManager();
+		IEntity player = pm.GetPlayerControlledEntity(playerID);
+		if (player != null)
+		{
+			m_playerID = playerID;
+			m_entityID = player.GetID();
+			m_chimera = ChimeraCharacter.Cast(player);
+			m_name = pm.GetPlayerName(playerID);
+		} else {
+			Print("ESC_Player: Player is null with ID: " + playerID, LogLevel.WARNING);
+		}
+	}
+	
+	int GetPlayerID()
+	{
+		return m_playerID;
+	}
+	
+	int GetEntityID()
+	{
+		return m_entityID;
+	}
+	
+	ref ChimeraCharacter GetPlayer()
+	{
+		return m_chimera;
+	}
+	
+
+	// TODO remove me
+	ref IEntity GetEntity()
+	{
+		return m_chimera;
+	}
+	
+	string GetName()
+	{
+		return m_name;
+	}
+	
+	SCR_TaskExecutor GetTaskExecutor()
+	{
+		return SCR_TaskExecutor.FromPlayerID(m_playerID);
+	}
+}
+
 enum ESC_WaypointType
 {
 	MOVE,
@@ -82,6 +137,98 @@ class ESC_Utils
 		Print("ESC_Util.SpawnEntity: Entity succesfully spawned.", LogLevel.DEBUG);
 		
 		return ent;
+	}
+	
+	static int PlayerCount()
+	{
+		
+		const PlayerManager pm = GetGame().GetPlayerManager();
+		
+		array<int> playerIds = {};
+		
+		const int playerCount = pm.GetPlayers(playerIds);
+		
+		return playerCount;
+	}
+	
+	static array<ChimeraCharacter> Players()
+	{
+		
+		const PlayerManager pm = GetGame().GetPlayerManager();
+		
+		array<int> playerIds = {};
+		
+		const int playerCount = pm.GetPlayers(playerIds);
+		
+		array<ChimeraCharacter> players = {};
+		
+		foreach(int pId : playerIds)
+		{
+			IEntity player = pm.GetPlayerControlledEntity(pId);
+			if (player == null)
+			{
+				Print("ESC_Utils.Players: Player with id: '" + pId + "' is null", LogLevel.WARNING);
+				continue;
+			}
+			
+			players.Insert(ChimeraCharacter.Cast(player));
+		}
+		
+		return players;
+	}
+	
+	static array<int> PlayerIds()
+	{
+		
+		const PlayerManager pm = GetGame().GetPlayerManager();
+		
+		array<int> playerIds = {};
+		
+		const int playerCount = pm.GetPlayers(playerIds);
+		
+		array<int> res = {};	
+		
+		
+		foreach(int pId : playerIds)
+		{
+			const IEntity player = pm.GetPlayerControlledEntity(pId);
+			if (player == null)
+			{
+				Print("ESC_Utils.Players: Player with id: '" + pId + "' is null", LogLevel.WARNING);
+				continue;
+			}
+			
+			res.Insert(pId);
+		}
+		
+		return res;
+	}
+	
+	static array<ref ESC_Player> GetPlayers()
+	{
+		const PlayerManager pm = GetGame().GetPlayerManager();
+		
+		array<int> playerIds = {};
+		
+		const int playerCount = pm.GetPlayers(playerIds);
+		
+		array<ref ESC_Player> players = {};
+		
+		foreach(int pId : playerIds)
+		{
+			const IEntity playerEnt = pm.GetPlayerControlledEntity(pId);
+			if (playerEnt == null)
+			{
+				Print("ESC_Utils.GetPlayers: Player with id: '" + pId + "' is null", LogLevel.WARNING);
+				continue;
+			}
+			
+			ref ESC_Player player = new ESC_Player(pId);
+
+			players.Insert(player);
+		}
+		
+		return players;
 	}
 }
 

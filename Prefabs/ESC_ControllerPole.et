@@ -1,4 +1,5 @@
-GenericEntity EscapeControllerPole : "{E58C42830756FF91}Prefabs/Structures/Signs/SignsWarning_Pole_Base.et" {
+GenericEntity : "{E58C42830756FF91}Prefabs/Structures/Signs/SignsWarning_Pole_Base.et" {
+ ID "50D67C36F4200F97"
  components {
   RigidBody "{54969A6AA8773997}" {
    ResponseIndex "TinyDestructible"
@@ -39,6 +40,7 @@ GenericEntity EscapeControllerPole : "{E58C42830756FF91}Prefabs/Structures/Signs
  coords 6162.398 165.896 6426.726
  {
   GenericEntity : "{3777B3A9231C5934}Prefabs/Structures/Signs/Warnings/SignStop_01.et" {
+   ID "691AB03604DA222F"
    components {
     Hierarchy "{569AF601019A3DF3}" {
      PivotID "socket_sign_01"

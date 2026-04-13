@@ -1,0 +1,25 @@
+GenericEntity ESC_Start_Sandbag_Wall {
+ coords 6 0 -202.136
+ {
+  $grp GenericEntity : "{A3A7C365E845B1B6}PrefabsEditable/Auto/Props/Military/Sandbags/E_Sandbag_01_long_high_burlap.et" {
+   {
+    coords -4.391 1.232 -0.003
+   }
+   {
+    coords -7.568 0.001 -0.057
+   }
+   {
+    coords -4.416 0.001 -0.01
+   }
+   {
+    coords -1.289 0.001 0.036
+   }
+   {
+    coords -7.543 1.232 -0.05
+   }
+   {
+    coords -1.263 1.232 0.043
+   }
+  }
+ }
+}

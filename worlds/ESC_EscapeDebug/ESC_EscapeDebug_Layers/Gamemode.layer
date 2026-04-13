@@ -1,6 +1,16 @@
 SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
  components {
-  ESC_EscapeTestComponent "{690D5B4EB60CFED7}" {
+  ESC_EscapeManagerComponent "{691881CE8B289D34}" {
+   m_randomStartingPointFromTheMap 0
+  }
+  SCR_AdditionalGameModeSettingsComponent "{6170E11C3C452ACC}" {
+   m_bEnableTeamKillPunishment 0
+   m_eNametagControllerFilters 0
+  }
+  SCR_RespawnSystemComponent "{56B2B4793051E7C9}" {
+   m_SpawnLogic SCR_AutoSpawnLogic "{5D36888CC966608A}" {
+    m_sForcedLoadout "Player"
+   }
   }
  }
  coords 6160.926 165.531 6432.813

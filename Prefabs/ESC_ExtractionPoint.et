@@ -1,0 +1,13 @@
+SCR_BaseTriggerEntity {
+ ID "691881CA97C0B171"
+ components {
+  ESC_EntityRegisterComponent "{691AB033BB0C9DBF}" {
+   m_type EXTRATION_POINT
+  }
+ }
+ Flags 0 0x1
+ coords 1110.378 0.899 6479.203
+ TriggerShapeType Sphere
+ SphereRadius 3.8
+ DrawShape 0
+}

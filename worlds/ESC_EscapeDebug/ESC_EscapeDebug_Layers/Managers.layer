@@ -1,15 +1,19 @@
 SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Managers/Factions/FactionManager_USxUSSR.et" {
- coords 6162.57 165.531 6432.272
+ coords 6164.164 165.531 6428.824
  Factions {
-  SCR_Faction "{56B2B46E999BF3BF}" {
-   m_bIsPlayable 0
-  }
   SCR_Faction "{56B2B46E9AF80999}" {
+   m_bIsPlayable 0
    m_bShowInWelcomeScreenIfNonPlayable 0
   }
  }
- m_bCanChangeFactionsPlayable 0
 }
-SCR_LoadoutManager : "{97EF4C1A41F63DDB}Prefabs/MP/Managers/Loadouts/LoadoutManager_USxUSSR.et" {
- coords 6163.851 165.531 6427.95
+SCR_LoadoutManager : "{AA4E7419A1FF65B0}Prefabs/MP/Managers/Loadouts/LoadoutManager_Base.et" {
+ coords 6157.491 165.531 6433.654
+ m_aPlayerLoadouts {
+  SCR_FactionPlayerLoadout "{6914ADD280BFC2E9}" {
+   m_sLoadoutName "Player"
+   m_sLoadoutResource "{8D89B17BCFBFAE44}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Campaign_US_Player.et"
+   m_sAffiliatedFaction "US"
+  }
+ }
 }
