@@ -12,7 +12,7 @@ SCR_LoadoutManager : "{AA4E7419A1FF65B0}Prefabs/MP/Managers/Loadouts/LoadoutMana
  m_aPlayerLoadouts {
   SCR_FactionPlayerLoadout "{6914ADD280BFC2E9}" {
    m_sLoadoutName "Player"
-   m_sLoadoutResource "{8D89B17BCFBFAE44}Prefabs/Characters/Campaign/Final/BLUFOR/US_army/Campaign_US_Player.et"
+   m_sLoadoutResource "{DAEBE8B0DC45AD7B}Prefabs/Characters/ESC_Player_Revivable.et"
    m_sAffiliatedFaction "US"
   }
  }

@@ -2,6 +2,12 @@ SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/Gam
  components {
   ESC_EscapeManagerComponent "{691881CE8B289D34}" {
    m_randomStartingPointFromTheMap 0
+   m_patrolPrefabs {
+    "{D815658156080328}Prefabs/Groups/OPFOR/Group_USSR_MedicalSection.et"
+    "{657590C1EC9E27D3}Prefabs/Groups/OPFOR/Group_USSR_LightFireTeam.et"
+    "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et"
+    "{3A76D9342C76A1F5}Prefabs/Groups/OPFOR/Group_USSR_SearchGroup.et"
+   }
   }
   SCR_AdditionalGameModeSettingsComponent "{6170E11C3C452ACC}" {
    m_bEnableTeamKillPunishment 0
