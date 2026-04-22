@@ -20,6 +20,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	[Attribute(uiwidget: UIWidgets.CheckBox, defvalue: "true", desc: "If enabled then we are gonna generate a random point from the map.")]
 	protected bool m_randomStartingPointFromTheMap;
 	
+	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "Patrol group prefabs that can be randomly selected for spawning")]
+	protected ref array<ResourceName> m_patrolPrefabs ;
+
 	// Auto registered
 	protected ref array<IEntity> m_startPoints = {};
 	
@@ -35,6 +38,8 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	protected ESC_EscapeStatus m_escapeStatus = ESC_EscapeStatus.READY;
 	
 	protected ref map<int, ref ESC_Player> m_players = new map<int, ref ESC_Player>();
+
+	protected ref ESC_PatrolController m_patrolController;
 	
 	
 	override void EOnInit(IEntity owner)
@@ -135,7 +140,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 			ESC_EscapeSpawnManager.SpawnStartingPrision(m_startingCord);
 		}
 		
-		foreach(ref ESC_Player player : m_players )
+		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(m_startingCord + {10, 0, 0}, "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et", 6, 15);
+		
+		foreach(ref ESC_Player player : ESC_Utils.GetPlayers() )
 		{
 			if (!m_extractionTask.AddTaskAssignee(player.GetTaskExecutor()))
 			{
@@ -143,12 +150,18 @@ class ESC_EscapeManagerComponent : ScriptComponent
 				continue;
 			}
 			
+			//player.GetPlayer().Teleport(mat);
 			player.GetPlayer().SetOrigin(m_startingCord);
 		}
 		
-		// TODO get this from config
-		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(m_startingCord + {10, 0, 0}, "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et", 6, 15);
-		
+		if (m_patrolPrefabs.Count() > 0)
+		{
+			m_patrolController = new ESC_PatrolController(m_patrolPrefabs);
+			m_patrolController.StartPatrolling();
+		} else {
+			Print("ESC_EscapeManagerComponent.StartEscape: No patrol config set, patrols will not spawn.", LogLevel.WARNING);
+		}
+
 		m_escapeStatus = ESC_EscapeStatus.INPROGRESS;
 	}
 	
