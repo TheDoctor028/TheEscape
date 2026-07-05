@@ -7,7 +7,7 @@ class ESC_EscapeSpawnManager
 	
 	const static float MinimumExtractionDistance = 1500;
 	
-	const static ResourceName m_startingBagpack = "{1BF7A0AE48B36B17}Prefabs/ESC_Starting_Backpack.et";
+	const static ResourceName m_startingBagpack = "{8B62240F1337A67E}Prefabs/ESC_Starting_Backpack_2.et";
 	
 	const static ResourceName m_prision = "{9FB70D958724EF8A}Prefabs/ESC_Prision_1.et";
 	
@@ -180,5 +180,20 @@ class ESC_EscapeSpawnManager
 		cycle.SetWaypoints(wps);
 		aiGroup.AddWaypoint(cycle);
         return aiGroup;
+    }
+	
+	 static ESC_Patrol SpawnPatrolAroundCoordinate2(vector centerPoint, ResourceName groupPrefab, int waypointCount, float patrolRadius)
+    {
+		ESC_Patrol patrol = new ESC_Patrol(groupPrefab);
+
+		if (!patrol.Spawn(centerPoint))
+		{
+			Print("ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate2: Patrol group failed to spawn, discarding.", LogLevel.WARNING);
+			return null;
+		}
+
+		patrol.PatrolCircle(centerPoint, waypointCount, patrolRadius, true);
+
+        return patrol;
     }
 }

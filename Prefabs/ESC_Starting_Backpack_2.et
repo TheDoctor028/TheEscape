@@ -1,0 +1,8 @@
+GenericEntity : "{4805E67E2AE30F8D}Prefabs/Items/Equipment/Backpacks/Backpack_Medical_M5.et" {
+ ID "511E9C6ADE70F798"
+ components {
+  ESC_StartingBackpackComponent "{69910357DD8F18D4}" {
+  }
+ }
+ coords 6174.326 165.531 6424.573
+}

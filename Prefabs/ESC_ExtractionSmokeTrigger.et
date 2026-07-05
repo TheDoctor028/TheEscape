@@ -1,0 +1,29 @@
+SCR_BaseTriggerEntity {
+ ID "69CABC968DF7A283"
+ components {
+  ESC_SmokeTriggerComponent "{69CABC92A38A6AB1}" {
+  }
+ }
+ coords 6145.494 169.314 6427.642
+ TriggerShapeType Sphere
+ SphereRadius 100
+ DrawShape 0
+ TriggerActivationType "All changes"
+ PeriodicQueries 1
+ PrefabsFilter {
+  PrefabFilter "{69CABC9C33FC07B0}" {
+   Prefab "{0DCE9A9A4F31BE1C}Prefabs/Weapons/Core/SmokeGrenade_Base.et"
+   CheckPrefabHierarchy 1
+  }
+ }
+ OnActivate ""\
+ "		if (Replication.IsClient()) return;"\
+ "			"\
+ "		Print(\"ESC_Smoke_Trigger.OnActivate: Smoke detected\");"\
+ "		"\
+ "		ESC_EscapeManagerComponent mng = ESC_Utils.GetManager();"\
+ "		"\
+ "		if (mng != null) mng.StartExtraction();"\
+ "		else Print(\"ESC_Smoke_Trigger.OnActivate: Failed to get manager\", LogLevel.ERROR);"\
+ "	"
+}

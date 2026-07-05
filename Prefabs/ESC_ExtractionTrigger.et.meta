@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{04F90AA411A8B205}Prefabs/Characters/ESC_Player_v2.et"
+ Name "{135F402B7520DB01}Prefabs/ESC_ExtractionTrigger.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

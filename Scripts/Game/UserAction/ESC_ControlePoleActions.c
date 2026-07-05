@@ -29,8 +29,7 @@ class ESC_StartEscapeUserAction: ScriptedUserAction
     //------------------------------------------------------------------------------------------------
     override void PerformAction(IEntity pOwnerEntity, IEntity pUserEntity)
     {
-		const ESC_EscapeManagerComponent m_manager = ESC_EscapeManagerComponent.Cast(GetGame().GetGameMode().FindComponent(ESC_EscapeManagerComponent));
-		m_manager.StartEscapeRcp();
+		ESC_Utils.GetManager().StartEscapeRcp();
     }
 
     //------------------------------------------------------------------------------------------------
@@ -38,5 +37,4 @@ class ESC_StartEscapeUserAction: ScriptedUserAction
     {
         return true;
     }	
-
 }

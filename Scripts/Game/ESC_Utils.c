@@ -98,9 +98,22 @@ class ESC_Waypoints
 	
 }
 
+enum ESC_SCR_MapDescriptorComponent_Types 
+{
+	CITY = 59,
+	VILLAGE = 60,
+	TOWN,
+	SETTLEMENT,
+	MILITARY_BASE = 79
+}
 
 class ESC_Utils
 {
+	
+	static vector neg_one_vector = {-1, -1, -1};
+	
+	static vector null_vector = {0, 0, 0};
+	
 	static Resource LoadResource(ResourceName name)
 	{
 		Resource rsrc = Resource.Load(name);
@@ -230,6 +243,41 @@ class ESC_Utils
 		
 		return players;
 	}
+	
+	static bool PosVecEQ(vector a, vector b, int dim = 3)
+	{
+		for (int i = 0; i < dim; i++)
+		{
+			if (a[i] != b[i]) return false;
+		}
+		
+		return true;
+	}
+
+	
+	static void EndGame()
+	{
+		SCR_BaseGameMode bgm = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+		
+		SCR_Faction faction = GetManager().GetEscapingFaction();
+		
+		bgm.EndGameMode(SCR_GameModeEndData.CreateSimple(EGameOverTypes.VICTORY, -1, factionManager.GetFactionIndex(faction)));
+	}
+	
+	static ESC_EscapeManagerComponent GetManager()
+	{
+		return ESC_EscapeManagerComponent.Cast(GetGame().GetGameMode().FindComponent(ESC_EscapeManagerComponent));
+	}
+	
+	static vector GetOnGround(vector v)
+	{
+		const float y = GetGame().GetWorld().GetSurfaceY(v[0], v[2]);
+		
+		return {v[0], y, v[2]};
+	}
+	
+	
 }
 
 

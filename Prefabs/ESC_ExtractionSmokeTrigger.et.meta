@@ -1,5 +1,5 @@
 MetaFileClass {
- Name "{DAEBE8B0DC45AD7B}Prefabs/Characters/ESC_Player_Revivable.et"
+ Name "{01BA312A286BBCA2}Prefabs/ESC_ExtractionSmokeTrigger.et"
  Configurations {
   EntityTemplateResourceClass PC {
   }

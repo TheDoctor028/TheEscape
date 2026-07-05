@@ -1,6 +1,18 @@
 SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/GameMode_Plain.et" {
  components {
   ESC_EscapeManagerComponent "{691881CE8B289D34}" {
+   components {
+    ESC_TheatreComponent "{69CABCBF3EEBA0A1}" {
+     m_cityPatrolRscs {
+      "{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et"
+      "{3A76D9342C76A1F5}Prefabs/Groups/OPFOR/Group_USSR_SearchGroup.et"
+     }
+     m_villagePatrolRscs {
+      "{30ED11AA4F0D41E5}Prefabs/Groups/OPFOR/Group_USSR_FireGroup.et"
+      "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et"
+     }
+    }
+   }
    m_randomStartingPointFromTheMap 0
    m_patrolPrefabs {
     "{D815658156080328}Prefabs/Groups/OPFOR/Group_USSR_MedicalSection.et"
@@ -12,6 +24,19 @@ SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/Gam
   SCR_AdditionalGameModeSettingsComponent "{6170E11C3C452ACC}" {
    m_bEnableTeamKillPunishment 0
    m_eNametagControllerFilters 0
+  }
+  SCR_GameOverScreenManagerComponent "{56DEC646298AD219}" {
+   m_GameOverScreenConfig SCR_GameOverScreenConfig "{56DEC6462FFDD82D}" {
+    m_aGameOverScreens {
+     SCR_BaseGameOverScreenInfo "{69CABC965F5E2CBB}" {
+      m_GameOverScreenId VICTORY
+      m_GameOverContentLayout "{2436D0BF3FCE6C84}UI/layouts/HUD/GameOver/GameOver_Base.layout"
+      m_OptionalParams SCR_BaseGameOverScreenInfoOptional "{69CABC9663DB8A8F}" {
+       m_sTitle "You succefully Escaped!"
+      }
+     }
+    }
+   }
   }
   SCR_RespawnSystemComponent "{56B2B4793051E7C9}" {
    m_SpawnLogic SCR_AutoSpawnLogic "{5D36888CC966608A}" {

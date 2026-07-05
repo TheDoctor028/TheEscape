@@ -9,6 +9,7 @@ enum ESC_EscapeStatus
 	PREPARING = 0,
 	READY = 1,
 	INPROGRESS,
+	EXTRACTION,
 }
 
 class ESC_EscapeManagerComponentClass : ScriptComponentClass {}
@@ -21,7 +22,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	protected bool m_randomStartingPointFromTheMap;
 	
 	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "Patrol group prefabs that can be randomly selected for spawning")]
-	protected ref array<ResourceName> m_patrolPrefabs ;
+	protected ref array<ResourceName> m_patrolPrefabs;
+	
+	protected ResourceName m_prisionGuardPrefab = "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et";
 
 	// Auto registered
 	protected ref array<IEntity> m_startPoints = {};
@@ -40,6 +43,10 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	protected ref map<int, ref ESC_Player> m_players = new map<int, ref ESC_Player>();
 
 	protected ref ESC_PatrolController m_patrolController;
+	
+	protected FactionKey m_escapingFaction = "US"; // TODO make this config
+	
+	protected int m_minimumExtrationDistance = 1500;
 	
 	
 	override void EOnInit(IEntity owner)
@@ -111,7 +118,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		
 		Print("ESC_EscapeManagerComponent.StartEscape: Extraction point index: " + randomI);
 		
-		m_extractionTask =  SCR_Task.Cast(ESC_Utils.SpawnEntity("{B3C3E51AB5662621}ESC_ExtractionTask.et", this.m_extractionPoint.GetOrigin()));
+		m_extractionTask =  SCR_Task.Cast(ESC_Utils.SpawnEntity("{C407197451572888}Prefabs/Characters/ESC_ExtractionTask_1.et", this.m_extractionPoint.GetOrigin()));
 		if (m_extractionTask == null)
 		{
 			Print("ESC_EscapeManagerComponent.StartEscape: Failed to seup extraction task", LogLevel.ERROR); 
@@ -140,7 +147,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 			ESC_EscapeSpawnManager.SpawnStartingPrision(m_startingCord);
 		}
 		
-		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(m_startingCord + {10, 0, 0}, "{CB58D90EA14430AD}Prefabs/Groups/OPFOR/Group_USSR_SentryTeam.et", 6, 15);
+		ESC_Utils.SpawnEntity("{01BA312A286BBCA2}Prefabs/ESC_ExtractionSmokeTrigger.et", m_extractionPoint.GetOrigin());
+				
+		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(m_startingCord + {10, 0, 0}, m_prisionGuardPrefab, 6, 15);
 		
 		foreach(ref ESC_Player player : ESC_Utils.GetPlayers() )
 		{
@@ -179,5 +188,38 @@ class ESC_EscapeManagerComponent : ScriptComponent
 				Print("ESC_EscapeManagerComponent.Register: Unknown ESC_ControlledEntityType for registration: " + t, LogLevel.ERROR);
 				return;
 		}
+	}
+	
+	SCR_Faction GetEscapingFaction()
+	{
+		SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+	    if (!factionManager)
+	        return null;
+	
+	    SCR_Faction faction = SCR_Faction.Cast(factionManager.GetFactionByKey(m_escapingFaction));
+	    if (!faction)
+	        return null;
+		
+		return faction;
+	}
+	
+	void NotifyFaction(FactionKey factionKey, ENotification notification)
+	{
+	    if (!Replication.IsServer())
+	        return;
+	
+	    SCR_NotificationsComponent.SendToFaction(GetEscapingFaction(), false, notification);
+	}
+		
+	void StartExtraction()
+	{
+		if (m_escapeStatus == ESC_EscapeStatus.EXTRACTION /* || m_escapeStatus != ESC_EscapeStatus.INPROGRESS*/) return;
+		m_escapeStatus = ESC_EscapeStatus.EXTRACTION;
+		
+		Print("ESC_EscapeManagerComponent.StartExtration: Starting extration phase");
+		//NotifyFaction(m_escapingFaction, ENotification.UNKNOWN);
+		
+		// After 30 s lets end the game for now.
+		GetGame().GetCallqueue().CallLater(ESC_Utils.EndGame, 5000);
 	}
 }

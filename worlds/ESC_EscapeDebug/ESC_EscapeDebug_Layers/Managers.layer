@@ -3,7 +3,6 @@ SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Manag
  Factions {
   SCR_Faction "{56B2B46E9AF80999}" {
    m_bIsPlayable 0
-   m_bShowInWelcomeScreenIfNonPlayable 0
   }
  }
 }
@@ -12,7 +11,7 @@ SCR_LoadoutManager : "{AA4E7419A1FF65B0}Prefabs/MP/Managers/Loadouts/LoadoutMana
  m_aPlayerLoadouts {
   SCR_FactionPlayerLoadout "{6914ADD280BFC2E9}" {
    m_sLoadoutName "Player"
-   m_sLoadoutResource "{DAEBE8B0DC45AD7B}Prefabs/Characters/ESC_Player_Revivable.et"
+   m_sLoadoutResource "{04F90AA411A8B205}Prefabs/Characters/ESC_Player.et"
    m_sAffiliatedFaction "US"
   }
  }

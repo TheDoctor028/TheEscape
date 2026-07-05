@@ -10,6 +10,9 @@ GenericEntity EscapeControllerPole : "{E58C42830756FF91}Prefabs/Structures/Signs
     }
    }
   }
+  SCR_MapDescriptorComponent "{69CABCB256FD11A6}" {
+   MainType "Military Base"
+  }
   ActionsManagerComponent "{691881DA538218D5}" {
    ActionContexts {
     UserActionContext "{691881DA4C086290}" {
@@ -37,6 +40,10 @@ GenericEntity EscapeControllerPole : "{E58C42830756FF91}Prefabs/Structures/Signs
   }
  }
  coords 6162.398 165.896 6426.726
+ EOnInit ""\
+ "		SCR_MapDescriptorComponent a = SCR_MapDescriptorComponent.Cast(owner.FindComponent(SCR_MapDescriptorComponent));"\
+ "		Print(\"EscapeControllerPole_Class.EOnInit: ID: \" + a.GetBaseType());"\
+ "	"
  {
   GenericEntity : "{3777B3A9231C5934}Prefabs/Structures/Signs/Warnings/SignStop_01.et" {
    components {

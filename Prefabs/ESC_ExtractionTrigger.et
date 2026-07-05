@@ -1,0 +1,12 @@
+SCR_BaseTriggerEntity {
+ ID "69C503470C671BFD"
+ coords 6134.139 166.134 6422.744
+ TriggerShapeType Sphere
+ SphereRadius 14.3
+ DrawShape 1
+ PrefabsFilter {
+  PrefabFilter "{69C503477221D488}" {
+   Prefab "{8FB91B2024BFB5E0}Prefabs/Characters/ESC_Player.et"
+  }
+ }
+}

@@ -22,6 +22,26 @@ class ESC_StartingBackpackComponent: ScriptComponent
 		Print("ESC_StartingBackpackComponent.EOnInit: Done!");
 	}
 	
+	protected void SpawnItemToBackpack(SCR_UniversalInventoryStorageComponent inv, ResourceName resource, int count)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			const IEntity ent = ESC_Utils.SpawnEntity(resource, {0, 0, 0});
+		
+			InventoryStorageSlot slot = inv.FindSuitableSlotForItem(ent);
+			
+			if (slot == null)
+			{
+				Print("ESC_StartingBackpackComponent.SpawnItemToBackpack: Can't find slot for " + resource + " in " + inv.ClassName(), LogLevel.ERROR);
+				return;
+			}
+			
+			
+			Print("ESC_StartingBackPackComponent.SpawnItemToBackpack: Found a slot!");
+			slot.AttachEntity(ent);
+		}
+	}
+	
 	protected void SpawnStartingItems(IEntity owner)
 	{
 		const SCR_UniversalInventoryStorageComponent inv = SCR_UniversalInventoryStorageComponent.Cast(owner.FindComponent(SCR_UniversalInventoryStorageComponent));
@@ -32,29 +52,11 @@ class ESC_StartingBackpackComponent: ScriptComponent
 		}
 		
 		
-		const SCR_InventoryStorageManagerComponent manager = SCR_InventoryStorageManagerComponent.Cast(owner.FindComponent(SCR_InventoryStorageManagerComponent));
-		
-		if (manager == null)
-		{
-			Print("ESC_StartingBackpackComponent.SpawnStartingItems: Can't find SCR_InventoryStorageManagerComponent", LogLevel.ERROR);
-			return;
-		}
-		
 		const int playerCount = ESC_Utils.PlayerCount();
 		
-		
-		if (!manager.TrySpawnPrefabToStorage(m_startingPistol, inv, -1, EStoragePurpose.PURPOSE_ANY, null, playerCount))
-		{
-			Print("ESC_StartingBackpackComponent.SpawnStartingItem: Failed to add pistol for starting bagpack", LogLevel.ERROR);
-			return;
-		}
-		
-		if (!manager.TrySpawnPrefabToStorage(m_startingMag, inv, -1, EStoragePurpose.PURPOSE_ANY, null, playerCount*2))
-		{
-			Print("ESC_StartingBackpackComponent.SpawnStartingItem: Failed to add mags for starting bagpack", LogLevel.ERROR);
-			return;
-		}
-		
+		SpawnItemToBackpack(inv, m_startingPistol, playerCount);
+		SpawnItemToBackpack(inv, m_startingMag, playerCount*2);
+
 		Print("ESC_StartingBackpackComponent.SpawnStartingItems: Starting bagpack filled");
 	}
 	

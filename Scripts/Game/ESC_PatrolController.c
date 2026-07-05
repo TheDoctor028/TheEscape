@@ -18,13 +18,13 @@ class ESC_PatrolController
 	//! Radius of the patrol cycle around the group spawn point.
 	const static float PATROL_RADIUS = 750;
 	
-	protected ref array<SCR_AIGroup> m_activePatrols = {};
+	protected ref array<ref ESC_Patrol> m_activePatrols2 = {};
 	
 	protected ref array<ResourceName> m_patrolGroupResource = {};
 
 	protected int m_desiredPatrolsPerPlayer = 4;
 
-	protected float m_checkRadius = SPAWN_RANGE_MAX;
+	protected float m_checkRadius = SPAWN_RANGE_MAX + PATROL_RADIUS;
 
 	void ESC_PatrolController(array<ResourceName> patrol)
 	{
@@ -50,6 +50,8 @@ class ESC_PatrolController
 	//! patrols and spawns more if the desired count is not met.
 	protected void CheckAndSpawnPatrols()
 	{
+		RemoveDeadPatrols();
+		
 		array<ChimeraCharacter> players = ESC_Utils.Players();
 		foreach (ChimeraCharacter player : players)
 		{
@@ -65,18 +67,28 @@ class ESC_PatrolController
 
 			Print(
 				"ESC_PatrolController.CheckAndSpawnPatrols: Player has " + nearbyCount
-				+ " nearby patrols, spawning " + toSpawn + " more.",
-				LogLevel.DEBUG
+				+ " nearby patrols, spawning " + toSpawn + " more."
 			);
 			SpawnPatrolsAroundPosition(playerPos, toSpawn);
 		}
 	}
 
+	//! Removes patrols whose underlying AI group no longer exists (e.g. killed by a player).
+	protected void RemoveDeadPatrols()
+	{
+		for (int i = m_activePatrols2.Count() - 1; i >= 0; i--)
+		{
+			ESC_Patrol group = m_activePatrols2.Get(i);
+			if (!group || !group.IsAlive())
+				m_activePatrols2.Remove(i);
+		}
+	}
+	
 	//! Returns how many active patrols are within m_checkRadius of the given position.
 	protected int CountNearbyPatrols(vector position)
 	{
 		int count = 0;
-		foreach (SCR_AIGroup group : m_activePatrols)
+		foreach (ESC_Patrol group : m_activePatrols2)
 		{
 			if (!group)
 				continue;
@@ -131,13 +143,13 @@ class ESC_PatrolController
 			
 			if (GetGame().GetWorld().GetSurfaceY(spawnPos[0], spawnPos[2]) <= 5) continue;
 
-			SCR_AIGroup group = ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(
+			ESC_Patrol group = ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate2(
 				spawnPos, prefab, WAYPOINT_COUNT, PATROL_RADIUS
 			);
 
 			if (group)
 			{
-				m_activePatrols.Insert(group);
+				m_activePatrols2.Insert(group);
 				Print(
 					"ESC_PatrolController.SpawnPatrolsAroundPosition: Patrol spawned at " + spawnPos.ToString()
 					+ " (angle=" + angleDeg + "deg, dist=" + dist + "m)",
