@@ -22,9 +22,9 @@ class ESC_PatrolController
 	
 	protected ref array<ResourceName> m_patrolGroupResource = {};
 
-	protected int m_desiredPatrolsPerPlayer = 4;
+	protected int m_desiredPatrolsPerPlayer = 6;
 
-	protected float m_checkRadius = SPAWN_RANGE_MAX + PATROL_RADIUS;
+	protected float m_checkRadius = SPAWN_RANGE_MIN + PATROL_RADIUS;
 
 	void ESC_PatrolController(array<ResourceName> patrol)
 	{

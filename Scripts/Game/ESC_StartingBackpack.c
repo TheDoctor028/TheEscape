@@ -6,6 +6,7 @@ class ESC_StartingBackpackComponentClass: ScriptComponentClass
 
 class ESC_StartingBackpackComponent: ScriptComponent
 {
+	protected IEntity m_owner;
 	
 	protected ResourceName  m_startingPistol = "{1353C6EAD1DCFE43}Prefabs/Weapons/Handguns/M9/Handgun_M9.et";
 	protected ResourceName  m_startingMag = "{9C05543A503DB80E}Prefabs/Weapons/Magazines/Magazine_9x19_M9_15rnd_Ball.et";
@@ -13,20 +14,21 @@ class ESC_StartingBackpackComponent: ScriptComponent
 	override void EOnInit(IEntity owner)
     {
 		if(!GetGame().InPlayMode() || Replication.IsClient()) return;
-		
-		Print("ESC_StartingBackpackComponent.EOnInit: Init!");
+	
+		m_owner = owner;	
+		Print("ESC_StartingBackpackComponent.EOnInit: Init!", LogLevel.DEBUG);
 		
 		// There migt be a better way but I am failing to find it, on how to trigger that the correct time.
 		GetGame().GetCallqueue().CallLater(SpawnStartingItems, 100, false, owner);
 		
-		Print("ESC_StartingBackpackComponent.EOnInit: Done!");
+		Print("ESC_StartingBackpackComponent.EOnInit: Done!", LogLevel.DEBUG);
 	}
 	
 	protected void SpawnItemToBackpack(SCR_UniversalInventoryStorageComponent inv, ResourceName resource, int count)
 	{
 		for (int i = 0; i < count; i++)
 		{
-			const IEntity ent = ESC_Utils.SpawnEntity(resource, {0, 0, 0});
+			const IEntity ent = ESC_Utils.SpawnEntity(resource, m_owner.GetOrigin());
 		
 			InventoryStorageSlot slot = inv.FindSuitableSlotForItem(ent);
 			
@@ -36,8 +38,6 @@ class ESC_StartingBackpackComponent: ScriptComponent
 				return;
 			}
 			
-			
-			Print("ESC_StartingBackPackComponent.SpawnItemToBackpack: Found a slot!");
 			slot.AttachEntity(ent);
 		}
 	}
@@ -57,7 +57,7 @@ class ESC_StartingBackpackComponent: ScriptComponent
 		SpawnItemToBackpack(inv, m_startingPistol, playerCount);
 		SpawnItemToBackpack(inv, m_startingMag, playerCount*2);
 
-		Print("ESC_StartingBackpackComponent.SpawnStartingItems: Starting bagpack filled");
+		Print("ESC_StartingBackpackComponent.SpawnStartingItems: Starting bagpack filled!");
 	}
 	
 	 override void OnPostInit(IEntity owner)

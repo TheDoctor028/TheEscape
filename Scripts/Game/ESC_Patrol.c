@@ -127,7 +127,7 @@ class ESC_Patrol
 						
 			Print("ESC_Patrol.PatrolCircle: Spawning patrol waypoint " + i + 
 			" at -> " +
-			 wpPos.ToString() + "(" + waypoint.GetName() + ")");
+			 wpPos.ToString() + "(" + waypoint.GetName() + ")", LogLevel.DEBUG);
 			
 			wps.Insert(waypoint);
 		}
@@ -138,7 +138,7 @@ class ESC_Patrol
 		cycle.SetName(Name()+"_Cycle_" + UUID.GenV4());
 		
 		Print("ESC_Patrol.PatrolCircle: Spawning cycle waypoint at -> " +
-			 position.ToString() + "(" + cycle.GetName() + ")");
+			 position.ToString() + "(" + cycle.GetName() + ")", LogLevel.DEBUG);
 		
 		cycle.SetWaypoints(wps);
 		m_group.AddWaypoint(cycle);
@@ -211,7 +211,7 @@ class ESC_Patrol
 			waypoint.SetName(Name() + "_WP_" + wpSeqUUID + "_" + i);
 						
 			Print("ESC_Patrol.PatrolRandomInRadius: Spawning random patrol waypoint " + i + 
-			" at -> " + wpPos.ToString() + "(" + waypoint.GetName() + ")");
+			" at -> " + wpPos.ToString() + "(" + waypoint.GetName() + ")", LogLevel.DEBUG);
 			
 			wps.Insert(waypoint);
 		}
@@ -222,7 +222,7 @@ class ESC_Patrol
 		cycle.SetName(Name() + "_Cycle_" + UUID.GenV4());
 		
 		Print("ESC_Patrol.PatrolRandomInRadius: Spawning cycle waypoint at -> " +
-			 position.ToString() + "(" + cycle.GetName() + ")");
+			 position.ToString() + "(" + cycle.GetName() + ")", LogLevel.DEBUG);
 		
 		cycle.SetWaypoints(wps);
 		m_group.AddWaypoint(cycle);

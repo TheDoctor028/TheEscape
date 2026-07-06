@@ -1,3 +1,6 @@
+PerceptionManager PerceptionManager : "{028DAEAD63E056BE}Prefabs/World/Game/PerceptionManager.et" {
+ coords 6120.51 157.845 6283.017
+}
 SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Managers/Factions/FactionManager_USxUSSR.et" {
  coords 6164.164 165.531 6428.824
  Factions {
@@ -5,6 +8,12 @@ SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Manag
    m_bIsPlayable 0
   }
  }
+}
+RadioManagerEntity RadioManager : "{B8E09FAB91C4ECCD}Prefabs/Systems/Radio/RadioManager.et" {
+ coords 6166.167 165.531 6425.047
+}
+SCR_ChimeraCharacter : "{04F90AA411A8B205}Prefabs/Characters/ESC_Player.et" {
+ coords 6175.949 167.035 6428.832
 }
 SCR_LoadoutManager : "{AA4E7419A1FF65B0}Prefabs/MP/Managers/Loadouts/LoadoutManager_Base.et" {
  coords 6157.491 165.531 6433.654

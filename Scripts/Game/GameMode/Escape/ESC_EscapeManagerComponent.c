@@ -158,9 +158,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 				Print("ESC_EscapeManagerComponent.StartEscape: Failed to assigne extraction task to player: " + player.GetPlayerID(), LogLevel.ERROR);
 				continue;
 			}
-			
-			//player.GetPlayer().Teleport(mat);
-			player.GetPlayer().SetOrigin(m_startingCord);
+		
+			// Waiting a bit to spawn stuff, probably there is a better way to do this
+			GetGame().GetCallqueue().CallLater(player.Teleport, 1000, m_startingCord);
 		}
 		
 		if (m_patrolPrefabs.Count() > 0)

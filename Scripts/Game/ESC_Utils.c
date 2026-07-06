@@ -30,6 +30,16 @@ class ESC_Player
 		return m_entityID;
 	}
 	
+	PlayerController GetPlayerController()
+	{
+		return GetGame().GetPlayerManager().GetPlayerController(m_playerID);
+	}
+	
+	SCR_EditableCharacterComponent GetEditableCharacterComponent()
+	{
+		return SCR_EditableCharacterComponent.Cast(m_chimera.FindComponent(SCR_EditableCharacterComponent));
+	}
+	
 	ref ChimeraCharacter GetPlayer()
 	{
 		return m_chimera;
@@ -50,6 +60,15 @@ class ESC_Player
 	SCR_TaskExecutor GetTaskExecutor()
 	{
 		return SCR_TaskExecutor.FromPlayerID(m_playerID);
+	}
+	
+	void Teleport(vector position)
+	{
+		SCR_EditableCharacterComponent character = GetEditableCharacterComponent();
+		vector trans[4];
+		character.GetTransform(trans);
+		trans[3] = position;
+		character.SetTransform(trans);
 	}
 }
 
@@ -275,6 +294,36 @@ class ESC_Utils
 		const float y = GetGame().GetWorld().GetSurfaceY(v[0], v[2]);
 		
 		return {v[0], y, v[2]};
+	}
+	
+	static void Teleport(notnull IEntity entity, vector transform)
+	{
+		 vector previousOrigin = entity.GetOrigin();
+
+	    BaseGameEntity baseGameEntity = BaseGameEntity.Cast(entity);
+	    if (baseGameEntity && !BaseVehicle.Cast(baseGameEntity))
+	    {
+	        baseGameEntity.Teleport(transform);
+	    }
+	    else
+	    {
+	        entity.SetWorldTransform(transform);
+	    }
+	
+	    Physics physics = entity.GetPhysics();
+	    if (physics)
+	    {
+	        physics.SetVelocity(vector.Zero);
+	        physics.SetAngularVelocity(vector.Zero);
+	    }
+	
+	    RplComponent replication = baseGameEntity.GetRplComponent();
+	    if (replication)
+	        replication.ForceNodeMovement(previousOrigin);
+	
+	    if (!ChimeraCharacter.Cast(entity))
+	        entity.Update();
+		}
 	}
 	
 	

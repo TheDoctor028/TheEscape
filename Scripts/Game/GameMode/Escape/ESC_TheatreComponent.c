@@ -5,9 +5,9 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 {
 	protected ref array<IEntity> m_militaryBases = {};
 	
-	protected ref array<IEntity> m_cities = {};
+	protected ref array<ref ESC_Town> m_cities = {};
 	
-	protected ref array<IEntity> m_villages = {};
+	protected ref array<ref ESC_Town> m_villages = {};
 	
 	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "OPFOR Prefabs that can patrol in cities")]
 	protected ref array<ResourceName> m_cityPatrolRscs;
@@ -38,13 +38,13 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 			switch(baseT)
 			{
 				case ESC_SCR_MapDescriptorComponent_Types.TOWN:
-					m_cities.Insert(entity);
+					m_cities.Insert(new ESC_Town(entity, ESC_Town_Size.TOWN));
 					break;
 				case ESC_SCR_MapDescriptorComponent_Types.CITY:
-					m_cities.Insert(entity);
+					m_cities.Insert(new ESC_Town(entity, ESC_Town_Size.CITY));
 					break;
 				case ESC_SCR_MapDescriptorComponent_Types.VILLAGE:
-					m_villages.Insert(entity);
+					m_villages.Insert(new ESC_Town(entity, ESC_Town_Size.VILLAGE));
 					break;
 				case ESC_SCR_MapDescriptorComponent_Types.MILITARY_BASE:
 					m_militaryBases.Insert(entity);
@@ -69,7 +69,7 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 	protected void SpawnActorsToTowns()
 	{
 		
-		foreach (IEntity town : m_villages)
+		foreach (ESC_Town town : m_villages)
 		{
 			if (Math.RandomFloat(0, 1) > m_villageWeight) continue;
 			const int rnd = Math.RandomInt(0, m_villagePatrolRscs.Count());
@@ -78,7 +78,7 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 			p.PatrolRandomInRadius(p.GetOrigin(), 8, 400);
 		}
 		
-		foreach (IEntity town : m_cities)
+		foreach (ESC_Town town : m_cities)
 		{
 			const int rnd = Math.RandomInt(0, m_cityPatrolRscs.Count());
 			
