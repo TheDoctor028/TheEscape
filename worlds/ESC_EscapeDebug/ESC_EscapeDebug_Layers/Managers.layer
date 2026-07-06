@@ -7,13 +7,101 @@ SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Manag
   SCR_Faction "{56B2B46E9AF80999}" {
    m_bIsPlayable 0
   }
+  SCR_Faction "{69CC8BBA4FB745E5}" {
+   FactionKey "CIV"
+   FactionColor 0.3176 0.0706 0.5608 1
+   UIInfo SCR_FactionUIInfo "{69CC8BBA411A5E08}" {
+    Name "Civilian"
+    Description "Civilian faction"
+    Icon "{9B2849BDEC4FCFE2}UI/Textures/Flags/flag_civ_ca.edds"
+   }
+   "Identity of soldiers" FactionIdentity "{69CC8BBA00FA6E83}" {
+    VisualIdentityArray {
+     VisualIdentity "{69CC8BBAB545A3DD}" {
+      Head "{EAF055495BA85CA1}Prefabs/Characters/Heads/Head_White_02.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB9515C3B97}" {
+      Head "{0F6C19B0574DCBCA}Prefabs/Characters/Heads/Head_White_03.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB94E5C5266}" {
+      Head "{5793DF10BF10B857}Prefabs/Characters/Heads/Head_White_03_Old.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB94C99C94F}" {
+      Head "{32583C88222142FD}Prefabs/Characters/Heads/Head_White_04.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB94C6BA8F4}" {
+      Head "{D7C470712EC4D596}Prefabs/Characters/Heads/Head_White_05.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB979169089}" {
+      Head "{BB90449192005AB8}Prefabs/Characters/Heads/Head_White_06.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB97624E4B3}" {
+      Head "{C1F80EE178D948D6}Prefabs/Characters/Heads/Head_White_08.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB9771EA045}" {
+      Head "{24644218743CDFBD}Prefabs/Characters/Heads/Head_White_09.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+     VisualIdentity "{69CC8BB96A035A83}" {
+      Head "{143245D81F2BAB94}Prefabs/Characters/Heads/Head_White_10.et"
+      Body "{0023F898C0FF18AA}Prefabs/Characters/Basebody/CharacterBasebody.et"
+     }
+    }
+   }
+   m_OutlineFactionColor 0.475 0.259 0.686 1
+   m_NotificationFactionColor 0.392 0.157 0.624 1
+   m_NotificationTextFactionColor 0.392 0.157 0.624 1
+   m_bIsPlayable 0
+   m_bIsCommanderAvailable 0
+   m_bCanCaptureBases 0
+   m_bIsMilitary 0
+   m_bTasksEnabled 0
+   m_sFactionFlag "{CCF597A247ACFD7F}UI/Textures/Flags/CIV-flag-base.edds"
+   m_FactionFlagMaterial "{41FF5ED4614840C9}Assets/Props/Fabric/Flags/Data/Flag_1_2_CIVILIAN.emat"
+   m_FactionLabel FACTION_CIV
+   m_eShowInWelcomeScreenOverride NEVERSHOW
+   m_aFriendlyFactionsIds {
+    "US"
+    "USSR"
+   }
+   m_CallsignInfo SCR_FactionCallsignInfo "{69CC8BBAC31CE5A4}" {
+   }
+   m_aEntityCatalogs {
+    SCR_EntityCatalogMultiList "{69CD5A6B0F66FB29}" {
+     m_eEntityCatalogType CHARACTER
+     m_aEntityEntryList {
+      SCR_EntityCatalogEntry "{69CD5A6B9C00E9D0}" {
+       m_sEntityPrefab "{9B443DD4C1F6DCAD}Prefabs/Characters/Factions/CIV/Character_CIV_baseLoadout.et"
+      }
+     }
+    }
+    SCR_EntityCatalog "{69CD5A6BB0950EDA}" {
+     m_eEntityCatalogType CHARACTER
+     m_aEntityEntryList {
+      SCR_EntityCatalogEntry "{69CD5A6BAF2D11AF}" {
+       m_sEntityPrefab "{22E43956740A6794}Prefabs/Characters/Factions/CIV/GenericCivilians/Character_CIV_Randomized.et"
+      }
+     }
+    }
+   }
+   m_aFlagNames {
+   }
+   m_aBaseCallsigns {
+    SCR_MilitaryBaseCallsign "{69CD5A6BBAD1E35A}" {
+    }
+   }
+  }
  }
 }
 RadioManagerEntity RadioManager : "{B8E09FAB91C4ECCD}Prefabs/Systems/Radio/RadioManager.et" {
  coords 6166.167 165.531 6425.047
-}
-SCR_ChimeraCharacter : "{04F90AA411A8B205}Prefabs/Characters/ESC_Player.et" {
- coords 6175.949 167.035 6428.832
 }
 SCR_LoadoutManager : "{AA4E7419A1FF65B0}Prefabs/MP/Managers/Loadouts/LoadoutManager_Base.et" {
  coords 6157.491 165.531 6433.654

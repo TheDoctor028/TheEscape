@@ -115,6 +115,60 @@ class ESC_Waypoints
 		return createdWP;
 	}
 	
+	static void Cycle(notnull array<vector> positions, notnull SCR_AIGroup group)
+	{
+		const string name = "";
+		if (positions.Count() == 0)
+		{
+			Print("ESC_Waypoints.WPCycle: positions count must be > 0", LogLevel.ERROR);
+			return;
+		}
+		
+		if (positions.Count() == 1)
+		{
+			positions.InsertAt(positions[0], 0); // Move waypoint at the cycle
+			positions.InsertAt(group.GetOrigin(), 0); // Mover wp at the base point
+		}
+	
+		array<AIWaypoint> wps = {};
+		
+		const UUID wpSeqUUID = UUID.GenV4();
+		
+		for (int i = 0; i < positions.Count()-1; i++)
+		{
+			const vector wpPos = positions[i];
+			
+			AIWaypoint waypoint = ESC_Waypoints.SpawnWaypoint(ESC_WaypointType.PATROL, wpPos);
+			
+			if (waypoint == null)
+			{
+				Print("ESC_Waypoints.Cycle: Waypoint is null", LogLevel.ERROR);
+				return;
+			}
+			
+			waypoint.SetName(name + "_WP_" + wpSeqUUID + "_" + i);
+						
+			Print("ESC_Waypoints.Cycle: Spawning patrol waypoint " + i + 
+			" at -> " +
+			 wpPos.ToString() + "(" + waypoint.GetName() + ")", LogLevel.DEBUG);
+			
+			wps.Insert(waypoint);
+		}
+		
+		const vector cyclePostion = positions[positions.Count()-1];
+		
+		// Create a cycle waypoint to add other waypoints
+		AIWaypointCycle cycle = AIWaypointCycle.Cast(ESC_Waypoints.SpawnWaypoint(ESC_WaypointType.CYCLE, cyclePostion));
+		
+		cycle.SetName(name + "_Cycle_" + UUID.GenV4());
+		
+		Print("ESC_Waypoints.Cycle: Spawning cycle waypoint at -> " +
+			 cyclePostion.ToString() + "(" + cycle.GetName() + ")", LogLevel.DEBUG);
+		
+		cycle.SetWaypoints(wps);
+		group.AddWaypoint(cycle);
+	}
+	
 }
 
 enum ESC_SCR_MapDescriptorComponent_Types 
@@ -169,6 +223,28 @@ class ESC_Utils
 		Print("ESC_Util.SpawnEntity: Entity succesfully spawned.", LogLevel.DEBUG);
 		
 		return ent;
+	}
+	
+	static bool SpawnVehicleWithDriver(ResourceName vehicleRsc, ResourceName driverRsc, vector pos, out Vehicle vehicle, out ChimeraCharacter driver)
+	{
+		vehicle = Vehicle.Cast(ESC_Utils.SpawnEntity(vehicleRsc, pos));
+		driver = ChimeraCharacter.Cast(ESC_Utils.SpawnEntity(driverRsc, pos + {1, 0, 1})); // Spawn it 1 meter apart to avoid collision
+		
+		SCR_CompartmentAccessComponent access = SCR_CompartmentAccessComponent.Cast(
+        	driver.FindComponent(SCR_CompartmentAccessComponent)
+    	);
+		
+		VehicleControllerComponent vcc = VehicleControllerComponent.Cast(vehicle.FindComponent(VehicleControllerComponent));
+		
+		
+		if (access)
+		{
+			vcc.StartEngine();
+			return access.MoveInVehicle(vehicle, ECompartmentType.PILOT);
+		} else {
+			Print("ESC_Utils.SpawnVehicleWithDriver: Faild to get SCR_CompartmentAccessComponent of driver.", LogLevel.ERROR);
+			return false;
+		}
 	}
 	
 	static int PlayerCount()
@@ -296,37 +372,32 @@ class ESC_Utils
 		return {v[0], y, v[2]};
 	}
 	
-	static void Teleport(notnull IEntity entity, vector transform)
+	static SCR_AIGroup CreateAIGroupFromUnit(notnull ChimeraCharacter unit)
 	{
-		 vector previousOrigin = entity.GetOrigin();
+		// TODO add error handling
+		
+		SCR_AIGroup group = SCR_AIGroup.Cast(ESC_Utils.SpawnEntity("{000CD338713F2B5A}Prefabs/AI/Groups/Group_Base.et", vector.Zero));
+		SCR_CharacterFactionAffiliationComponent cfac = SCR_CharacterFactionAffiliationComponent.Cast(unit.FindComponent(SCR_CharacterFactionAffiliationComponent));
+		
+		group.SetFaction(cfac.GetPerceivedFaction());
+		group.SetName("ESC_Group_"+UUID.GenV4());
+		
+		group.AddAIEntityToGroup(unit);
 
-	    BaseGameEntity baseGameEntity = BaseGameEntity.Cast(entity);
-	    if (baseGameEntity && !BaseVehicle.Cast(baseGameEntity))
-	    {
-	        baseGameEntity.Teleport(transform);
-	    }
-	    else
-	    {
-	        entity.SetWorldTransform(transform);
-	    }
-	
-	    Physics physics = entity.GetPhysics();
-	    if (physics)
-	    {
-	        physics.SetVelocity(vector.Zero);
-	        physics.SetAngularVelocity(vector.Zero);
-	    }
-	
-	    RplComponent replication = baseGameEntity.GetRplComponent();
-	    if (replication)
-	        replication.ForceNodeMovement(previousOrigin);
-	
-	    if (!ChimeraCharacter.Cast(entity))
-	        entity.Update();
-		}
+		return group;		
 	}
 	
+	static ResourceName GetRandomRscName(array<ResourceName> items)
+	{
+		int randI = Math.RandomInt(0, items.Count());
+		return items[randI];
+	}
 	
+	static ref ESC_Town GetRandomTown(array<ref ESC_Town> items)
+	{
+		int randI = Math.RandomInt(0, items.Count());
+		return items[randI];
+	}
 }
 
 

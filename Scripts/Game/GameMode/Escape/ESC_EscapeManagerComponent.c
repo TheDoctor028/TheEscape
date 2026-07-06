@@ -160,7 +160,8 @@ class ESC_EscapeManagerComponent : ScriptComponent
 			}
 		
 			// Waiting a bit to spawn stuff, probably there is a better way to do this
-			GetGame().GetCallqueue().CallLater(player.Teleport, 1000, m_startingCord);
+			//GetGame().GetCallqueue().CallLater(player.Teleport, 1000, false, m_startingCord);
+			player.Teleport(m_startingCord);
 		}
 		
 		if (m_patrolPrefabs.Count() > 0)
