@@ -65,6 +65,18 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	
 	protected void OnInitServer()
 	{
+		
+		SCR_TaskSystem ts = SCR_TaskSystem.GetInstance();
+		
+		
+		m_extractionTask = ts.CreateTask("{B3C3E51AB5662621}ESC_ExtractionTask.et", "", "", "", {6162.398, 165.896, 6426.726});
+		
+		if (m_extractionTask == null)
+		{
+			Print("ESC_EscapeManagerComponent.StartEscape: Failed to seup extraction task", LogLevel.ERROR); 
+			return;
+		}
+		
 		GetGame().GetCallqueue().CallLater(RegisterPalyers, 1000, true);
 	}
 	
@@ -120,13 +132,6 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		
 		SCR_TaskSystem taskSystem = SCR_TaskSystem.GetInstance();
 		
-		m_extractionTask =  SCR_Task.Cast(ESC_Utils.SpawnEntity("{C407197451572888}Prefabs/Characters/ESC_ExtractionTask_1.et", this.m_extractionPoint.GetOrigin()));
-		if (m_extractionTask == null)
-		{
-			Print("ESC_EscapeManagerComponent.StartEscape: Failed to seup extraction task", LogLevel.ERROR); 
-			return;
-		}
-		
 		if (m_randomStartingPointFromTheMap)
 		{
 			Print("ESC_EscapeManagerComponent.StartEscape: Getting random spawnpoint from the map");
@@ -155,9 +160,14 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		
 		foreach(ref ESC_Player player : ESC_Utils.GetPlayers() )
 		{
+			m_extractionTask.SetOrigin(player.GetOrigin());
+			//GetGame().GetCallqueue().CallLater(taskSystem.AssignTask, 500, false, m_extractionTask, player.GetTaskExecutor());
 			taskSystem.AssignTask(m_extractionTask, player.GetTaskExecutor());
 			player.Teleport(m_startingCord);
 		}
+		
+
+		m_extractionTask.SetOrigin(m_extractionPoint.GetOrigin());
 		
 		if (m_patrolPrefabs.Count() > 0)
 		{

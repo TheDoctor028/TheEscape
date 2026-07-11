@@ -1,15 +1,10 @@
-SCR_TriggerTask : "{7259F0B101761BD5}Prefabs/Tasks/MoveTask.et" {
- ID "55D072570E7E8AB8"
- components {
-  SCR_MapDescriptorComponent "{55D072570E7E8AB7}" {
-   DisplayName "Extraction"
-   MainType Task
-  }
- }
- coords 6095.707 161.718 6368.35
- m_sTaskID "extraction_move"
- m_TaskUIInfo SCR_TaskUIInfo "{691881CF0B78EF82}" {
-  Name "Move to extraction"
+SCR_Task : "{1D0F815858EE24AD}Prefabs/Tasks/BaseTask.et" {
+ ID "6122B7685222DE16"
+ coords 6145.715 165.527 6432.926
+ m_sTaskID "ESC_Extracction"
+ m_TaskUIInfo SCR_TaskUIInfo "{645CDE114ACB9A88}" {
+  Name "Move to Extraction"
+  Description "Move to this position and use a some to call in extraction."
   Icon "{1CEB083DD299041C}UI/Textures/Editor/Toolbar/Commanding/Toolbar_Commanding_Objective_Move.edds"
  }
  m_eTaskOwnership FACTION
@@ -17,6 +12,4 @@ SCR_TriggerTask : "{7259F0B101761BD5}Prefabs/Tasks/MoveTask.et" {
  m_aOwnerFactionKeys {
   "US"
  }
- m_TextType MOVE
- m_iTaskCompletionType ALWAYS_MANUAL
 }

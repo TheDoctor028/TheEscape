@@ -1,0 +1,18 @@
+GenericEntity {
+ coords 200.499 0 0.248
+ {
+  StaticModelEntity : "{07F043DD6AACCD0B}Prefabs/Structures/Infrastructure/Barriers/BarGate_01/BarGate_01.et" {
+   coords -0.418 0 1.748
+  }
+  StaticModelEntity : "{8125DEB23B3FF39E}Prefabs/Compositions/Misc/CustomEntities/DestructionEntities/Sandbag_01_bunker_burlap_CompositionDestruction.et" {
+   coords -9.468 0 -0.274
+  }
+  GenericEntity : "{9CF19D872D4D1C00}Prefabs/Weapons/HeavyWeapons/HMG_M2HB_pintle.et" {
+   coords -9.474 1.193 1.442
+  }
+  GenericEntity : "{F39BC00F1D5823C4}Prefabs/Compositions/Misc/SubCompositions/Sandbag_end_high_Cluttered_USSR_01.et" {
+   coords 6.111 0 2.214
+   angles 0 0 0
+  }
+ }
+}

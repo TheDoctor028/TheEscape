@@ -70,6 +70,11 @@ class ESC_Player
 		trans[3] = position;
 		character.SetTransform(trans);
 	}
+	
+	vector GetOrigin()
+	{
+		return m_chimera.GetOrigin();
+	}
 }
 
 enum ESC_WaypointType
