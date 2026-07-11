@@ -118,6 +118,8 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		
 		Print("ESC_EscapeManagerComponent.StartEscape: Extraction point index: " + randomI);
 		
+		SCR_TaskSystem taskSystem = SCR_TaskSystem.GetInstance();
+		
 		m_extractionTask =  SCR_Task.Cast(ESC_Utils.SpawnEntity("{C407197451572888}Prefabs/Characters/ESC_ExtractionTask_1.et", this.m_extractionPoint.GetOrigin()));
 		if (m_extractionTask == null)
 		{
@@ -153,14 +155,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		
 		foreach(ref ESC_Player player : ESC_Utils.GetPlayers() )
 		{
-			if (!m_extractionTask.AddTaskAssignee(player.GetTaskExecutor()))
-			{
-				Print("ESC_EscapeManagerComponent.StartEscape: Failed to assigne extraction task to player: " + player.GetPlayerID(), LogLevel.ERROR);
-				continue;
-			}
-		
-			// Waiting a bit to spawn stuff, probably there is a better way to do this
-			//GetGame().GetCallqueue().CallLater(player.Teleport, 1000, false, m_startingCord);
+			taskSystem.AssignTask(m_extractionTask, player.GetTaskExecutor());
 			player.Teleport(m_startingCord);
 		}
 		

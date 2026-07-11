@@ -90,6 +90,9 @@ SCR_FactionManager FactionManager_USxUSSR1 : "{589540B35EBA8CDC}Prefabs/MP/Manag
       }
      }
     }
+    SCR_EntityCatalog "{69CD61D41D3EA546}" {
+     m_eEntityCatalogType ITEM
+    }
    }
    m_aFlagNames {
    }
