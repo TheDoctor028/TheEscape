@@ -96,11 +96,7 @@ class ESC_EscapeSpawnManager
 
 		IEntity starterBagpack = ESC_Utils.SpawnEntity(m_startingBagpack, sp);
 
-		const vector sizeDiff = {25, 10, 25};
-		const vector minSp = sp - sizeDiff;
-		const vector maxSp = sp + sizeDiff;
-
-		GetGame().GetAIWorld().RequestNavmeshRebuild(minSp, maxSp);
+		ESC_Utils.NavmeshRebuild(sp, {25, 10, 25});
 	}
 
 	//------------------------------------------------------------------------------------------------

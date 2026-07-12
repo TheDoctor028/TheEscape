@@ -57,6 +57,15 @@ class ESC_Utils
         return maxY - minY;
     }
 	
+	// TODO
+	static void NavmeshRebuild(vector pos, vector box)
+	{
+		const vector minSp = sp - box;
+		const vector maxSp = sp + box;
+		
+		GetGame().GetAIWorld().RequestNavmeshRebuild(minSp, maxSp);	
+	}
+	
 	/*
 	TODO
 	*/

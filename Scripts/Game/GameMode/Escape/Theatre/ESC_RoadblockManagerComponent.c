@@ -160,16 +160,18 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 			if (prefab == "")
 				continue;
 
-		IEntity roadblock = ESC_Utils.SpawnEntityRotated(prefab, spawnPos, yaw);
-		if (roadblock)
-		{
-			m_spawnedRoadblocks.Insert(roadblock);
-			spawned++;
-			Print(string.Format("ESC_RoadblockManagerComponent: Spawned %1/%2 at %3 (width %4m)",
-				spawned, m_roadblockCount, spawnPos.ToString(), foundRoad.GetWidth()), LogLevel.DEBUG);
-
-			SpawnRoadblockDefender(spawnPos);
-		}
+			IEntity roadblock = ESC_Utils.SpawnEntityRotated(prefab, spawnPos, yaw);
+			if (roadblock)
+			{
+				m_spawnedRoadblocks.Insert(roadblock);
+				spawned++;
+				Print(string.Format("ESC_RoadblockManagerComponent: Spawned %1/%2 at %3 (width %4m)",
+					spawned, m_roadblockCount, spawnPos.ToString(), foundRoad.GetWidth()), LogLevel.DEBUG);
+	
+				SpawnRoadblockDefender(spawnPos);
+			}
+			
+			ESC_Utils.NavmeshRebuild(spawnPos, {50, 30, 50});
 		}
 
 		Print(string.Format("ESC_RoadblockManagerComponent.SpawnRoadblocks: Done. %1/%2 roadblocks after %3 attempts.",
