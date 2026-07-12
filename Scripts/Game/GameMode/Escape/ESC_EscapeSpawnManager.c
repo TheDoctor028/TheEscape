@@ -43,36 +43,6 @@ class ESC_EscapeSpawnManager
     }
 
 	//------------------------------------------------------------------------------------------------
-	//! Measures how steep the terrain is around `center` by sampling surface heights
-	//! in a square grid and returning max - min. Used as a "slope reject" filter.
-	//! \param center Center of the sampling region.
-	//! \param size Edge length of the sampling region (square).
-	//! \param step Spacing between samples (defaults to 1m).
-	//! \return Elevation delta (m) inside the sampled square.
-	static float GetSteepness(vector center, float size, float step = 1.0)
-    {
-        float half = size * 0.5;
-		// There is no max float enum so we are using a "large" number
-        float minY = 1000000000000000;
-        float maxY = -1000000000000000;
-
-        BaseWorld world = GetGame().GetWorld();
-
-        for (float x = center[0] - half; x <= center[0] + half; x += step)
-        {
-            for (float z = center[2] - half; z <= center[2] + half; z += step)
-            {
-                float y = world.GetSurfaceY(x, z);
-
-                if (y < minY) minY = y;
-                if (y > maxY) maxY = y;
-            }
-        }
-
-        return maxY - minY;
-    }
-
-	//------------------------------------------------------------------------------------------------
 	//! Generates a valid escape starting point: rejects positions whose surface is
 	//! below `YLimitForSpawn`, whose surroundings are steeper than `SteepnessLimitForSpawn`,
 	//! or whose distance to the extraction point is below `MinimumExtractionDistance`.
@@ -95,7 +65,7 @@ class ESC_EscapeSpawnManager
 		while(
 			vector.Distance(sp, {-1, -1, -1}) == 0 ||
 			 y <= this.YLimitForSpawn ||
-			GetSteepness(sp, 10) > SteepnessLimitForSpawn ||
+			ESC_Utils.GetSteepness(sp, 10) > SteepnessLimitForSpawn ||
 			vector.Distance(sp, extractionPosition) < MinimumExtractionDistance
 		)
 		{
