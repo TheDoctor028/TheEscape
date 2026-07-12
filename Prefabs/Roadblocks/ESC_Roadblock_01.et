@@ -1,47 +1,59 @@
-GenericEntity ESC_Roadblock_01 : "{3BA9D94C4EE9B33B}Prefabs/Compositions/Slotted/CompositionBase.et" {
+GenericEntity : "{3BA9D94C4EE9B33B}Prefabs/Compositions/Slotted/CompositionBase.et" {
+ ID "5282DCB5DFC8538F"
  coords 200.499 0 0.248
  {
   GenericEntity : "{42887801DB9228B5}PrefabsEditable/Auto/Compositions/Misc/SubCompositions/E_Sandbag_Corner_Left_USSR_01.et" {
+   ID "69D8FD25932150A5"
    coords -5.773 0.05 -4.452
    angles 0 -90 0
   }
   Turret : "{73530808E4B455BA}Prefabs/Weapons/Tripods/Tripod_M3_M2HB.et" {
+   ID "69D8FD25932150A7"
    coords 3.406 0 6.461
   }
   StaticModelEntity : "{8125DEB23B3FF39E}Prefabs/Compositions/Misc/CustomEntities/DestructionEntities/Sandbag_01_bunker_burlap_CompositionDestruction.et" {
+   ID "69D8FD2593261805"
    coords -4.912 0.5 3.982
   }
   GenericEntity : "{A89BC9D55FFB4CD8}Prefabs/Weapons/MachineGuns/PKM/MG_PKM.et" {
+   ID "69D8FD2593261801"
    coords -5.835 0.336 -3.076
    angles 64.573 -92.977 7.342
   }
   GenericEntity : "{C8A9F7FDDF3CE851}Prefabs/Compositions/Misc/SubCompositions/Decorations/Barrel_Radio_01.et" {
+   ID "69D8FD2593261800"
    coords -4.895 0 -4.186
    angles 0 -138.041 0
   }
   $grp StaticModelEntity : "{EF39F5715EF2323E}Prefabs/Structures/Walls/BarbedWire/BarbedTape_01/BarbedTape_01_Short.et" {
    {
-    coords 6.598 -0.002 6.697
-    angles 0 -6.381 0
+    ID "69D8FD25932150A9"
+    coords -7.814 0 1.841
+    angles 0 33.569 0
    }
    {
-    coords 6.678 -0.001 4.755
-    angles 0 -6.381 0
-   }
-   {
+    ID "69D8FD25932611A3"
     coords -7.671 0 -1.143
     angles 0 -6.381 0
    }
    {
-    coords -7.835 0 0.298
+    ID "69D8FD25932611A4"
+    coords 6.678 -0.001 4.755
     angles 0 -6.381 0
    }
    {
-    coords -7.814 0 1.841
-    angles 0 33.569 0
+    ID "69D8FD259326181C"
+    coords 6.598 -0.002 6.697
+    angles 0 -6.381 0
+   }
+   {
+    ID "69D8FD259326FB78"
+    coords -7.835 0 0.298
+    angles 0 -6.381 0
    }
   }
   GenericEntity : "{F39BC00F1D5823C4}Prefabs/Compositions/Misc/SubCompositions/Sandbag_end_high_Cluttered_USSR_01.et" {
+   ID "69D8FD25932150AB"
    coords 4.96 -0.077 7.087
    angles 0 0 0
   }

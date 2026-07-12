@@ -43,7 +43,7 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 	protected const int SPAWN_DELAY_MS = 250;
 
 	//! Safety multiplier so scarce road networks don't spin the loop forever.
-	protected const int MAX_ATTEMPTS_MULTIPLIER = 15;
+	protected const int MAX_ATTEMPTS_MULTIPLIER = 32;
 
 	//! Roadblocks spawned this round, kept for cleanup/debug by other systems.
 	protected ref array<IEntity> m_spawnedRoadblocks = {};
@@ -145,7 +145,7 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 			vector roadDir = nextPos - spawnPos;
 			roadDir[1] = 0;
 			roadDir.Normalize();
-			float yaw = Math.Atan2(roadDir[0], roadDir[2]) * Math.RAD2DEG + 90.0;
+			float yaw = Math.Atan2(roadDir[0], roadDir[2]) * Math.RAD2DEG; // + 90.0; we dont need this extra 90
 
 			// 6. Pick a prefab (wide roads may use a dedicated pool) and spawn it.
 			ResourceName prefab = PickRoadblockPrefab(foundRoad.GetWidth());

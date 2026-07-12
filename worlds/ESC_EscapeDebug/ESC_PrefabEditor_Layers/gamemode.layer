@@ -1,0 +1,8 @@
+PerceptionManager PerceptionManager : "{028DAEAD63E056BE}Prefabs/World/Game/PerceptionManager.et" {
+ coords 0 0 0
+}
+SCR_GameModeEditor GameMode_Editor_Full : "{DA3986AF1B5032B7}Prefabs/MP/Modes/Editor/GameMode_Editor_Full.et" {
+}
+EntityEditIcon : "{99CAB176956E40DE}Prefabs/WorldEditor/EntityIcons/Decal/CameraDecal.et" {
+ coords 231.275 0 -28.036
+}

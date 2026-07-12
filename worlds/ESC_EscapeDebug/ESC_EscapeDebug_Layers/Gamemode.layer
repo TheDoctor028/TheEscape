@@ -6,7 +6,7 @@ SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/Gam
      components {
       ESC_RoadblockManagerComponent "{A110C0FFEE0000A1}" {
        m_roadblockPrefabs {
-        "{F6DFF6F368475611}Prefabs/ESC_Start_Sandbag_Wall.et"
+        "{4CBEB5AA5EAB7CAD}Prefabs/Roadblocks/ESC_Roadblock_01.et"
        }
        m_wideRoadPrefabs {
         "{723C2AAE6E9AD131}Prefabs/WEGenerators/Roads/Asphalt/RG_Road_Asphalt_E_01.et"
