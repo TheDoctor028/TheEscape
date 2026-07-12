@@ -3,6 +3,17 @@ SCR_BaseGameMode GameMode_Plain1 : "{1B76F75A3175E85C}Prefabs/MP/Modes/Plain/Gam
   ESC_EscapeManagerComponent "{691881CE8B289D34}" {
    components {
     ESC_TheatreComponent "{69CABCBF3EEBA0A1}" {
+     components {
+      ESC_RoadblockManagerComponent "{A110C0FFEE0000A1}" {
+       m_roadblockPrefabs {
+        "{F6DFF6F368475611}Prefabs/ESC_Start_Sandbag_Wall.et"
+       }
+       m_wideRoadPrefabs {
+        "{723C2AAE6E9AD131}Prefabs/WEGenerators/Roads/Asphalt/RG_Road_Asphalt_E_01.et"
+        "{8E83BBD5CEC42A11}Prefabs/WEGenerators/Roads/Dirt/RG_Road_Dirt_01.et"
+       }
+      }
+     }
      m_cityPatrolRscs {
       "{E552DABF3636C2AD}Prefabs/Groups/OPFOR/Group_USSR_RifleSquad.et"
       "{3A76D9342C76A1F5}Prefabs/Groups/OPFOR/Group_USSR_SearchGroup.et"

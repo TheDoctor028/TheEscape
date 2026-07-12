@@ -82,6 +82,38 @@ class ESC_Utils
 		return ent;
 	}
 	
+	//------------------------------------------------------------------------------------------------
+	//! Spawns an entity prefab at `position` rotated by `yawDeg` around the world up
+	//! axis (Y). Used for props that must face a specific direction, e.g. roadblocks
+	//! placed perpendicular to a road. Mirrors `SpawnEntity` but bakes a yaw rotation
+	//! into the spawn transform matrix.
+	//! \param name Resource name (with GUID) of the prefab to spawn.
+	//! \param position World position for the entity origin (Y already on ground).
+	//! \param yawDeg Yaw angle in degrees (rotation around Y).
+	//! \return The spawned IEntity, or null if the prefab failed to load/spawn.
+	static IEntity SpawnEntityRotated(ResourceName name, vector position, float yawDeg)
+	{
+		Resource res = Resource.Load(name);
+		if (!res.IsValid())
+		{
+			Print("ESC_Util.SpawnEntityRotated: Invalid entity prefab path: " + name, LogLevel.ERROR);
+			return null;
+		}
+
+		EntitySpawnParams spawnParams = new EntitySpawnParams();
+		spawnParams.TransformMode = ETransformMode.WORLD;
+		
+		Math3D.AnglesToMatrix({yawDeg, 0, 0}, spawnParams.Transform);
+		spawnParams.Transform[3] = position;
+
+		IEntity ent = GetGame().SpawnEntityPrefab(res, null, spawnParams);
+		if (!ent) return null;
+
+		Print("ESC_Util.SpawnEntityRotated: Spawned at " + position.ToString() + " yaw=" + yawDeg, LogLevel.DEBUG);
+
+		return ent;
+	}
+
 	static bool SpawnVehicleWithDriver(ResourceName vehicleRsc, ResourceName driverRsc, vector pos, out Vehicle vehicle, out ChimeraCharacter driver)
 	{
 		vehicle = Vehicle.Cast(ESC_Utils.SpawnEntity(vehicleRsc, pos));

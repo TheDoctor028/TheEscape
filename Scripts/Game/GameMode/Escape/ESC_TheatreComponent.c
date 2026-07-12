@@ -54,7 +54,7 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 	//! Civilian character prefab spawned as the driver of each civilian vehicle.
 	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "OPFOR Prefabs for the hunter group")]
 	protected ref array<ResourceName> m_hunterGroupPrefabs;
-	
+
 	protected ref ESC_HunterGroupController m_hunterGroupController;
 
 	static ESC_TheatreComponent GetInstance()
@@ -86,6 +86,15 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 	ESC_HunterGroupController GetHunterGroupController()
 	{
 		return m_hunterGroupController;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Returns the military bases discovered during `InitTowns`, so other systems
+//! (e.g. the roadblock manager component) can avoid placing props on top of them.
+	//! \return Array of military base entities (may be empty if none were found).
+	array<IEntity> GetMilitaryBases()
+	{
+		return m_militaryBases;
 	}
 
 	//------------------------------------------------------------------------------------------------
