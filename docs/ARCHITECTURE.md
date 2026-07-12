@@ -62,7 +62,7 @@ canonical way to add new candidates without modifying the manager.
 
 1. Pick a random spawn in a hard-coded 11500 x 12300 m square.
 2. Reject if the surface elevation is below `YLimitForSpawn`.
-3. Reject if the slope (via `GetSteepness`) is above `SteepnessLimitForSpawn`.
+3. Reject if the slope (via `ESC_Utils.GetSteepness`) is above `SteepnessLimitForSpawn`.
 4. Reject if the distance to the chosen extraction point is below
    `MinimumExtractionDistance`.
 5. Otherwise spawn the prison prop + starting backpack at the spot and return.
