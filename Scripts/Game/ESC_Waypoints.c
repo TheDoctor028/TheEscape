@@ -3,6 +3,7 @@ enum ESC_WaypointType
 	MOVE,
 	PATROL,
 	CYCLE,
+	ATTACK,
 }
 
 class ESC_Waypoints
@@ -18,6 +19,8 @@ class ESC_Waypoints
 				return "{22A875E30470BD4F}Prefabs/AI/Waypoints/AIWaypoint_Patrol.et";
 			case ESC_WaypointType.CYCLE:
 				return "{35BD6541CBB8AC08}Prefabs/AI/Waypoints/AIWaypoint_Cycle.et";
+			case ESC_WaypointType.ATTACK:
+				return "{1B0E3436C30FA211}Prefabs/AI/Waypoints/AIWaypoint_Attack.et";
 		}
 		
 		return "{49CED34BBCD060F0}Prefabs/AI/Waypoints/AIWaypoint_Base.et";

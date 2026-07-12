@@ -248,9 +248,37 @@ class ESC_Patrol
 		}
 	}
 	
+	/*
+	Sends the patrol to attack a given position. Clears the current waypoints of
+	the patrol and spawns a single Attack waypoint at the given position.
+		pos - the position to attack
+	*/
 	void PatrolAttack(vector pos)
 	{
-	
+		if (!m_spawned)
+		{
+			Print("ESC_Patrol.PatrolAttack: group " + Name() + " is not yet spawned cant start attack", LogLevel.WARNING);
+			return;
+		}
+		
+		ClearWaypoints();
+		
+		AIWaypoint waypoint = ESC_Waypoints.SpawnWaypoint(ESC_WaypointType.ATTACK, pos);
+		
+		if (waypoint == null)
+		{
+			Print("ESC_Patrol.PatrolAttack: Waypoint is null", LogLevel.ERROR);
+			return;
+		}
+		
+		waypoint.SetName(Name() + "_Attack_WP_" + UUID.GenV4());
+		
+		Print("ESC_Patrol.PatrolAttack: Spawning attack waypoint at -> " +
+			 pos.ToString() + "(" + waypoint.GetName() + ")", LogLevel.DEBUG);
+		
+		m_group.AddWaypoint(waypoint);
+		
+		m_inPatrol = true;
 	}
 	
 }
