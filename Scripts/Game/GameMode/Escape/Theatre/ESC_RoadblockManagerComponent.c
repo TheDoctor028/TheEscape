@@ -23,6 +23,11 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "Roadblock prefabs for wide roads (optional)")]
 	protected ref array<ResourceName> m_wideRoadPrefabs;
 
+	//! AI group prefabs randomly picked to defend each spawned roadblock. Optional;
+	//! when empty no defenders are spawned and roadblocks stand undefended.
+	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "AI group prefabs spawned to defend each roadblock")]
+	protected ref array<ResourceName> m_roadblockDefenderPrefabs;
+
 	//! How many roadblocks to place across the map.
 	[Attribute(uiwidget: UIWidgets.Auto, defvalue: "12", desc: "Number of roadblocks to generate")]
 	protected int m_roadblockCount = 12;
@@ -47,6 +52,9 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 
 	//! Roadblocks spawned this round, kept for cleanup/debug by other systems.
 	protected ref array<IEntity> m_spawnedRoadblocks = {};
+
+	//! Defender patrols spawned this round, kept for cleanup/debug by other systems.
+	protected ref array<ref ESC_Patrol> m_spawnedDefenders = {};
 
 	//------------------------------------------------------------------------------------------------
 	//! Singleton accessor resolved through the theatre (the roadblock component
@@ -152,18 +160,57 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 			if (prefab == "")
 				continue;
 
-			IEntity roadblock = ESC_Utils.SpawnEntityRotated(prefab, spawnPos, yaw);
-			if (roadblock)
-			{
-				m_spawnedRoadblocks.Insert(roadblock);
-				spawned++;
-				Print(string.Format("ESC_RoadblockManagerComponent: Spawned %1/%2 at %3 (width %4m)",
-					spawned, m_roadblockCount, spawnPos.ToString(), foundRoad.GetWidth()), LogLevel.DEBUG);
-			}
+		IEntity roadblock = ESC_Utils.SpawnEntityRotated(prefab, spawnPos, yaw);
+		if (roadblock)
+		{
+			m_spawnedRoadblocks.Insert(roadblock);
+			spawned++;
+			Print(string.Format("ESC_RoadblockManagerComponent: Spawned %1/%2 at %3 (width %4m)",
+				spawned, m_roadblockCount, spawnPos.ToString(), foundRoad.GetWidth()), LogLevel.DEBUG);
+
+			SpawnRoadblockDefender(spawnPos);
+		}
 		}
 
 		Print(string.Format("ESC_RoadblockManagerComponent.SpawnRoadblocks: Done. %1/%2 roadblocks after %3 attempts.",
 			spawned, m_roadblockCount, attempts), LogLevel.NORMAL);
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Spawns a random defender AI group (wrapped in an ESC_Patrol) at `position` and
+	//! assigns a Defend waypoint on the roadblock. No-op when no defender prefabs are
+	//! configured, so roadblock generation still works without defenders.
+	//! \param position World position of the roadblock to defend.
+	protected void SpawnRoadblockDefender(vector position)
+	{
+		if (!m_roadblockDefenderPrefabs || m_roadblockDefenderPrefabs.Count() == 0)
+		{
+			Print("ESC_RoadblockManagerComponent.SpawnRoadblockDefender: No defender prefabs configured, skipping.", LogLevel.WARNING);
+			return;
+		}
+
+		ResourceName defenderPrefab = m_roadblockDefenderPrefabs.GetRandomElement();
+		if (defenderPrefab == "")
+		{
+			Print("ESC_RoadblockManagerComponent.SpawnRoadblockDefender: Picked empty prefab, skipping.", LogLevel.WARNING);
+			return;
+		}
+
+		vector groundPos = ESC_Utils.GetOnGround(position);
+		ESC_Patrol patrol = new ESC_Patrol(defenderPrefab, groundPos);
+
+		if (!patrol.IsAlive())
+		{
+			Print("ESC_RoadblockManagerComponent.SpawnRoadblockDefender: Defender group failed to spawn, discarding.",
+				LogLevel.WARNING);
+			return;
+		}
+
+		patrol.PatrolDefend(groundPos);
+		m_spawnedDefenders.Insert(patrol);
+
+		Print(string.Format("ESC_RoadblockManagerComponent: Defender patrol %1 defending roadblock at %2",
+			patrol.Name(), groundPos.ToString()), LogLevel.DEBUG);
 	}
 
 	//------------------------------------------------------------------------------------------------
@@ -212,5 +259,13 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 	array<IEntity> GetSpawnedRoadblocks()
 	{
 		return m_spawnedRoadblocks;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Returns the defender patrols spawned this round, for cleanup/debug by other systems.
+	//! \return Array of spawned defender patrols (may be empty).
+	array<ref ESC_Patrol> GetSpawnedDefenders()
+	{
+		return m_spawnedDefenders;
 	}
 }
