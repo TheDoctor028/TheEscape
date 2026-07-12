@@ -281,4 +281,37 @@ class ESC_Patrol
 		m_inPatrol = true;
 	}
 	
+	/*
+	Sends the patrol to defend a given position. Clears the current waypoints of
+	the patrol and spawns a single Defend waypoint at the given position.
+		pos - the position to defend
+	*/
+	void PatrolDefend(vector pos)
+	{
+		if (!m_spawned)
+		{
+			Print("ESC_Patrol.PatrolDefend: group " + Name() + " is not yet spawned cant start defend", LogLevel.WARNING);
+			return;
+		}
+		
+		ClearWaypoints();
+		
+		AIWaypoint waypoint = ESC_Waypoints.SpawnWaypoint(ESC_WaypointType.DEFEND, pos);
+		
+		if (waypoint == null)
+		{
+			Print("ESC_Patrol.PatrolDefend: Waypoint is null", LogLevel.ERROR);
+			return;
+		}
+		
+		waypoint.SetName(Name() + "_Defend_WP_" + UUID.GenV4());
+		
+		Print("ESC_Patrol.PatrolDefend: Spawning defend waypoint at -> " +
+		 pos.ToString() + "(" + waypoint.GetName() + ")", LogLevel.DEBUG);
+		
+		m_group.AddWaypoint(waypoint);
+		
+		m_inPatrol = true;
+	}
+	
 }
