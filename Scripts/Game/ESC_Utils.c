@@ -255,6 +255,77 @@ class ESC_Utils
 		int randI = Math.RandomInt(0, items.Count());
 		return items[randI];
 	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! Returns a random position inside a circle of radius `r` centered at `o`.
+	//! \param o Center of the circle.
+	//! \param r Outer radius of the circle.
+	//! \param minR Inner radius for an annulus; negative means a filled circle from the center.
+	//! \param onGround When true the Y coordinate is snapped to the terrain surface.
+	//! \param maxSteepness Max terrain elevation delta allowed at the picked spot;
+	//! a negative value disables the slope filter.
+	//! \return A world-space position inside the circle (snapped to ground when requested).
+	static vector GetRandomPositionInCircle(vector o, float r,  float minR = -1.0, bool onGround = true, float maxSteepness = -1.0)
+	{
+		if (r <= minR)
+		{
+			Print("ESC_Utils.GetRandomPositionInCircle: minR must be smaller then r.", LogLevel.ERROR);
+			return vector.Zero;
+		}
+		
+		// No area to sample from - just return the center, snapped to ground if requested.
+		if (r <= 0.0)
+		{
+			if (onGround)
+			{
+				return GetOnGround(o);
+			}
+
+			return o;
+		}
+
+		// A negative minR means "no inner radius" - clamp it to 0, then to the outer
+		// radius so the annulus never inverts.
+		float innerR = Math.Max(0.0, minR);
+		innerR = Math.Min(innerR, r);
+
+		// A handful of retries so a steepness filter can reject bad spots without
+		// looping forever on unsuitable terrain.
+		const int maxAttempts = 32;
+		vector pos = vector.Zero;
+
+		for (int attempt = 0; attempt < maxAttempts; attempt++)
+		{
+			float u = Math.RandomFloat(0.0, 1.0);
+			float radius = Math.Sqrt(innerR * innerR + (r * r - innerR * innerR) * u);
+
+			float angle = Math.RandomFloat(0.0, Math.PI * 2);
+
+			pos = GetOnGround(Vector(o[0] + radius * Math.Sin(angle), o[1], o[2] + radius * Math.Cos(angle)));
+		
+			// If we should be on ground (not in water)
+			if(onGround && pos[1] < 5.0)
+			{
+				continue;
+			}
+
+			// No slope filter requested - accept the point right away.
+			if (maxSteepness < 0.0)
+			{
+				return pos;
+			}
+
+			// Reject spots that are too steep (sampled over a 5m area around the point).
+			if (GetSteepness(pos, 5.0) <= maxSteepness)
+			{
+				return pos;
+			}
+		}
+
+		// Could not satisfy the slope filter in time - fall back to the last attempt
+		// so the caller still gets a usable position inside the circle.
+		return pos;
+	}
 }
 
 

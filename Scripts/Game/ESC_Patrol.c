@@ -248,4 +248,9 @@ class ESC_Patrol
 		}
 	}
 	
+	void PatrolAttack(vector pos)
+	{
+	
+	}
+	
 }

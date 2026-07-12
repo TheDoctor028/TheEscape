@@ -2,7 +2,7 @@ class ESC_HunterGroupController
 {
 	protected ref array<ResourceName> m_prefabs = {};
 	
-	protected ref array<ref ESC_Patrol> m_hunetGroup = {};
+	protected ref array<ref ESC_Patrol> m_hunetGroups = {};
 	
 	void ESC_HunterGroupController()
 	{
@@ -14,7 +14,7 @@ class ESC_HunterGroupController
 		const array<ref ESC_Player> players = ESC_Utils.GetPlayers();
 		const vector playerPos = players.Get(0).GetOrigin();
 		
-		ESC_Patrol(ESC_Utils.GetRandomRscName(m_prefabs));
+		const ESC_Patrol g = ESC_Patrol(ESC_Utils.GetRandomRscName(m_prefabs), ESC_Utils.GetRandomPositionInCircle(playerPos, 800, 600));
 		
 	}
 }
