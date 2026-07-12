@@ -28,6 +28,9 @@ class ESC_HunterGroupController
 	{
 		const vector playerPos = GetRandomPlayerPos();
 		const ESC_Patrol g = ESC_Patrol(ESC_Utils.GetRandomRscName(m_prefabs), ESC_Utils.GetRandomPositionInCircle(playerPos, m_spawnRanges[0], m_spawnRanges[1]));
+		
+		Print("Spawned at " + vector.Distance(playerPos, g.GetOrigin()) + " m from the player");
+		
 		m_huneterGroups.Insert(g);
 		
 		// Kick off the initial waypoint spawning
@@ -36,6 +39,8 @@ class ESC_HunterGroupController
 	
 	protected void Handler()
 	{
+		if (m_huneterGroups.Count() == 0) Spawn();
+		
 		while(m_wpUpdateQueue.Count() > 0)
 		{
 			const ref ESC_Patrol g = m_wpUpdateQueue.Get(0);
@@ -52,7 +57,7 @@ class ESC_HunterGroupController
 
 	void Start()
 	{
-		Spawn();
-		GetGame().GetCallqueue().CallLater(Handler, 1000, false);
+		// GetGame().GetCallqueue().CallLater(Spawn, 10000, false); // Spawn later 
+		GetGame().GetCallqueue().CallLater(Handler, 10000, false);
 	}
 }

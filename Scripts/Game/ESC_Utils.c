@@ -265,7 +265,7 @@ class ESC_Utils
 	//! \param maxSteepness Max terrain elevation delta allowed at the picked spot;
 	//! a negative value disables the slope filter.
 	//! \return A world-space position inside the circle (snapped to ground when requested).
-	static vector GetRandomPositionInCircle(vector o, float r,  float minR = -1.0, bool onGround = true, float maxSteepness = -1.0)
+	static vector GetRandomPositionInCircle(vector o, float r,  float minR = -1.0, bool onGround = true, float maxSteepness = -1.0, int maxAttempts = 64)
 	{
 		if (r <= minR)
 		{
@@ -283,26 +283,17 @@ class ESC_Utils
 
 			return o;
 		}
-
-		// A negative minR means "no inner radius" - clamp it to 0, then to the outer
-		// radius so the annulus never inverts.
-		float innerR = Math.Max(0.0, minR);
-		innerR = Math.Min(innerR, r);
-
-		// A handful of retries so a steepness filter can reject bad spots without
-		// looping forever on unsuitable terrain.
-		const int maxAttempts = 32;
+		
 		vector pos = vector.Zero;
-
+		
 		for (int attempt = 0; attempt < maxAttempts; attempt++)
 		{
-			float u = Math.RandomFloat(0.0, 1.0);
-			float radius = Math.Sqrt(innerR * innerR + (r * r - innerR * innerR) * u);
-
-			float angle = Math.RandomFloat(0.0, Math.PI * 2);
-
-			pos = GetOnGround(Vector(o[0] + radius * Math.Sin(angle), o[1], o[2] + radius * Math.Cos(angle)));
+			const float randomDist = Math.RandomFloat(Math.Max(0.0, minR), r);
+			const float randomYaw = Math.RandomFloat(0, 360);
 		
+			pos = GetOnGround(o + vector.FromYaw(randomYaw) * randomDist);
+		
+			
 			// If we should be on ground (not in water)
 			if(onGround && pos[1] < 5.0)
 			{
@@ -322,9 +313,8 @@ class ESC_Utils
 			}
 		}
 
-		// Could not satisfy the slope filter in time - fall back to the last attempt
-		// so the caller still gets a usable position inside the circle.
-		return pos;
+		// If we dont found a suitable position whit in the maxAttempts then return a zero vector
+		return vector.Zero;
 	}
 }
 
