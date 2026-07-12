@@ -60,8 +60,8 @@ class ESC_Utils
 	// TODO
 	static void NavmeshRebuild(vector pos, vector box)
 	{
-		const vector minSp = sp - box;
-		const vector maxSp = sp + box;
+		const vector minSp = pos - box;
+		const vector maxSp = pos + box;
 		
 		GetGame().GetAIWorld().RequestNavmeshRebuild(minSp, maxSp);	
 	}

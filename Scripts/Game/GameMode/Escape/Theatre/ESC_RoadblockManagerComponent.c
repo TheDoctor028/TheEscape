@@ -30,19 +30,19 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 
 	//! How many roadblocks to place across the map.
 	[Attribute(uiwidget: UIWidgets.Auto, defvalue: "12", desc: "Number of roadblocks to generate")]
-	protected int m_roadblockCount = 12;
+	protected int m_roadblockCount;
 
 	//! Max distance (m) from a random point to the nearest road before the hit is discarded.
 	[Attribute(uiwidget: UIWidgets.Auto, defvalue: "400", desc: "Max distance (m) from a random point to the nearest road")]
-	protected float m_maxRoadSearchDistance = 400;
+	protected float m_maxRoadSearchDistance;
 
 	//! Min distance (m) a roadblock must keep from discovered military bases.
 	[Attribute(uiwidget: UIWidgets.Auto, defvalue: "200", desc: "Min distance (m) from military bases")]
-	protected float m_minDistanceFromBases = 200;
+	protected float m_minDistanceFromBases;
 
 	//! Roads wider than this (m) use `m_wideRoadPrefabs`; narrower roads use `m_roadblockPrefabs`.
 	[Attribute(uiwidget: UIWidgets.Auto, defvalue: "6", desc: "Road width (m) above which the wide-road prefab pool is used")]
-	protected float m_wideRoadThreshold = 6;
+	protected float m_wideRoadThreshold;
 
 	//! Delay (ms) before spawning, sized to land after the theatre's 100 ms `InitTowns` query.
 	protected const int SPAWN_DELAY_MS = 250;
@@ -153,7 +153,7 @@ class ESC_RoadblockManagerComponent : ESC_ScriptComponent
 			vector roadDir = nextPos - spawnPos;
 			roadDir[1] = 0;
 			roadDir.Normalize();
-			float yaw = Math.Atan2(roadDir[0], roadDir[2]) * Math.RAD2DEG; // + 90.0; we dont need this extra 90
+			float yaw = Math.Atan2(roadDir[0], roadDir[2]) * Math.RAD2DEG;
 
 			// 6. Pick a prefab (wide roads may use a dedicated pool) and spawn it.
 			ResourceName prefab = PickRoadblockPrefab(foundRoad.GetWidth());
