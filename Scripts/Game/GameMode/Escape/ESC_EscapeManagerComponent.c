@@ -119,7 +119,12 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	{
 	}
 	
-	// TODO-DOCS
+	//------------------------------------------------------------------------------------------------
+	//! Static accessor for the singleton escape manager on the current game mode.
+	//! Convenience wrapper around `ESC_Utils.GetManager()` so other systems can
+	//! reach the manager without touching the utils namespace directly.
+	//! \return The `ESC_EscapeManagerComponent` attached to the game mode, or
+	//! null if no manager is present.
 	static ESC_EscapeManagerComponent GetInstance()
 	{
 		// TODO-AI: swap the implementation
@@ -317,8 +322,12 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		GetGame().GetCallqueue().CallLater(ESC_Utils.EndGame, 5000);
 	}
 	
-	
-	// TODO-DOCS
+
+	//------------------------------------------------------------------------------------------------
+	//! \return The current `ESC_EscapeStatus` round phase (PREPARING / READY /
+	//! INPROGRESS / EXTRACTION). Used by `ScriptedUserAction` conditions - e.g.
+	//! the start button only enables in READY - and by the extraction trigger to
+	//! gate round transitions.
 	ESC_EscapeStatus GetStatus()
 	{
 		return m_escapeStatus;
