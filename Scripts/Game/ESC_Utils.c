@@ -244,18 +244,6 @@ class ESC_Utils
 		return group;		
 	}
 	
-	static ResourceName GetRandomRscName(array<ResourceName> items)
-	{
-		int randI = Math.RandomInt(0, items.Count());
-		return items[randI];
-	}
-	
-	static ref ESC_Town GetRandomTown(array<ref ESC_Town> items)
-	{
-		int randI = Math.RandomInt(0, items.Count());
-		return items[randI];
-	}
-	
 	//------------------------------------------------------------------------------------------------
 	//! Returns a random position inside a circle of radius `r` centered at `o`.
 	//! \param o Center of the circle.

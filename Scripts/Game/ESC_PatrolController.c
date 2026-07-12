@@ -129,7 +129,7 @@ class ESC_PatrolController
 			float spawnY = GetGame().GetWorld().GetSurfaceY(spawnX, spawnZ);
 			vector spawnPos = Vector(spawnX, spawnY, spawnZ);
 
-			int prefabIdx = Math.RandomInt(0, m_patrolGroupResource.Count() - 1);
+			int prefabIdx = m_patrolGroupResource.GetRandomIndex();
 			ResourceName prefab = m_patrolGroupResource.Get(prefabIdx);
 
 			if (prefab == "")

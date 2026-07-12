@@ -18,8 +18,7 @@ class ESC_HunterGroupController
 	protected vector GetRandomPlayerPos()
 	{
 		const array<ref ESC_Player> players = ESC_Utils.GetPlayers();
-		const int i = Math.RandomInt(0, players.Count());
-		const vector playerPos = players.Get(i).GetOrigin();
+		const vector playerPos = players.GetRandomElement().GetOrigin();
 		
 		return playerPos;
 	}
@@ -27,7 +26,7 @@ class ESC_HunterGroupController
 	protected void Spawn()
 	{
 		const vector playerPos = GetRandomPlayerPos();
-		const ESC_Patrol g = ESC_Patrol(ESC_Utils.GetRandomRscName(m_prefabs), ESC_Utils.GetRandomPositionInCircle(playerPos, m_spawnRanges[0], m_spawnRanges[1]));
+		const ESC_Patrol g = ESC_Patrol(m_prefabs.GetRandomElement(), ESC_Utils.GetRandomPositionInCircle(playerPos, m_spawnRanges[0], m_spawnRanges[1]));
 		
 		Print("Spawned at " + vector.Distance(playerPos, g.GetOrigin()) + " m from the player");
 		

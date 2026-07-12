@@ -174,12 +174,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 			return;
 		}
 		
-		const int randomI = Math.RandomInt(0, m_extractionPoints.Count() - 1);
-		if (randomI < 0) return;
+		m_extractionPoint = m_extractionPoints.GetRandomElement();
 		
-		m_extractionPoint = m_extractionPoints.Get(randomI);
-		
-		Print("ESC_EscapeManagerComponent.StartEscape: Extraction point index: " + randomI);
+		Print("ESC_EscapeManagerComponent.StartEscape: Extraction point at: " + m_extractionPoint.GetOrigin());
 		
 		SCR_TaskSystem taskSystem = SCR_TaskSystem.GetInstance();
 
@@ -197,7 +194,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 			m_startingCord = ESC_EscapeSpawnManager.GenerateStartPoint(m_extractionPoint.GetOrigin());
 			Print("ESC_EscapeManagerComponent.StartEscape: Starting coordinates: " + m_startingCord);
 		} else {
-			const int randomStartPointI = Math.RandomInt(0, m_startPoints.Count() - 1);
+			const int randomStartPointI = m_startPoints.GetRandomIndex();
 			if (randomStartPointI < 0) return;
 			
 			vector startingPoint = m_extractionPoint.GetOrigin();

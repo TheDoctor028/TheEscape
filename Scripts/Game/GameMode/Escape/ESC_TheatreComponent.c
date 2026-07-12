@@ -146,17 +146,13 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 		foreach (ESC_Town town : m_villages)
 		{
 			if (Math.RandomFloat(0, 1) > m_villageWeight) continue;
-			const int rnd = Math.RandomInt(0, m_villagePatrolRscs.Count());
-
-			ESC_Patrol p = new ESC_Patrol(m_villagePatrolRscs.Get(rnd), ESC_Utils.GetOnGround(town.GetOrigin()));
+			ESC_Patrol p = new ESC_Patrol(m_villagePatrolRscs.GetRandomElement(), ESC_Utils.GetOnGround(town.GetOrigin()));
 			p.PatrolRandomInRadius(p.GetOrigin(), 8, 400);
 		}
 
 		foreach (ESC_Town town : m_cities)
 		{
-			const int rnd = Math.RandomInt(0, m_cityPatrolRscs.Count());
-
-			ESC_Patrol p = new ESC_Patrol(m_cityPatrolRscs.Get(rnd), ESC_Utils.GetOnGround(town.GetOrigin()));
+			ESC_Patrol p = new ESC_Patrol(m_cityPatrolRscs.GetRandomElement(), ESC_Utils.GetOnGround(town.GetOrigin()));
 			p.PatrolRandomInRadius(p.GetOrigin(), 8, 600);
 		}
 	}
@@ -168,13 +164,13 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 	{
 		for(int i = 0; i < m_civTrafficIntensity; i++)
 		{
-			ESC_Town start = ESC_Utils.GetRandomTown(m_villages);
+			ESC_Town start = m_villages.GetRandomElement();
 
 			Vehicle vehicle;
 			ChimeraCharacter driver;
 
 			ESC_Utils.SpawnVehicleWithDriver(
-			ESC_Utils.GetRandomRscName(m_civilTrafficVehicles), m_civilCharacter, start.GetOrigin(), vehicle, driver);
+			m_civilTrafficVehicles.GetRandomElement(), m_civilCharacter, start.GetOrigin(), vehicle, driver);
 
 			SCR_AIGroup ai = ESC_Utils.CreateAIGroupFromUnit(driver);
 
@@ -184,7 +180,7 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 
 			for(int j = 0; j < maxJ; j++)
 			{
-				trail.Insert(ESC_Utils.GetRandomTown(m_villages).GetOrigin());
+				trail.Insert(m_villages.GetRandomElement().GetOrigin());
 			}
 
 			ESC_Waypoints.Cycle(trail, ai);
