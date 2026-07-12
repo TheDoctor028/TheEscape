@@ -70,6 +70,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	protected SCR_Task m_extractionTask;
 
 	//! Current phase of the round; used to gate RPCs like `StartEscape`.
+	[RplProp()]
 	protected ESC_EscapeStatus m_escapeStatus = ESC_EscapeStatus.READY; // TODO This should be preparing after ready up logic is done.
 
 	//! Per-player bookkeeping keyed by the engine player ID.
@@ -222,7 +223,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		}
 
 		// Give players a short beat before relocating them to the start coordinate.
-		GetGame().GetCallqueue().CallLater(TeleportPlayersToStart, 4000);
+		GetGame().GetCallqueue().CallLater(TeleportPlayersToStart, 5000);
 		
 
 		m_extractionTask.SetOrigin(m_extractionPoint.GetOrigin());
@@ -236,6 +237,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		}
 
 		m_escapeStatus = ESC_EscapeStatus.INPROGRESS;
+		Replication.BumpMe();
 	}
 
 	//------------------------------------------------------------------------------------------------
