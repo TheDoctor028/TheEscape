@@ -60,6 +60,6 @@ class ESC_StartEscapeUserAction: ScriptedUserAction
 	//! \return Always true.
     override bool CanBePerformedScript(IEntity user)
     {
-        return true;
+		return ESC_Utils.GetManager().GetStatus() == ESC_EscapeStatus.READY;
     }
 }

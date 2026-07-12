@@ -171,6 +171,8 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 			}
 
 			ESC_Waypoints.Cycle(trail, ai);
+			
+			driver.Activate();
 		}
 	}
 

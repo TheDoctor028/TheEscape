@@ -70,7 +70,7 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	protected SCR_Task m_extractionTask;
 
 	//! Current phase of the round; used to gate RPCs like `StartEscape`.
-	protected ESC_EscapeStatus m_escapeStatus = ESC_EscapeStatus.READY;
+	protected ESC_EscapeStatus m_escapeStatus = ESC_EscapeStatus.READY; // TODO This should be preparing after ready up logic is done.
 
 	//! Per-player bookkeeping keyed by the engine player ID.
 	protected ref map<int, ref ESC_Player> m_players = new map<int, ref ESC_Player>();
@@ -117,6 +117,13 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	protected void OnInitClient()
 	{
 	}
+	
+	// TODO-DOCS
+	static ESC_EscapeManagerComponent GetInstance()
+	{
+		// TODO-AI: swap the implementation
+		return ESC_Utils.GetManager();
+	}
 
 	//------------------------------------------------------------------------------------------------
 	//! Periodic (1 s) loop that pulls the latest connected players from
@@ -146,8 +153,9 @@ class ESC_EscapeManagerComponent : ScriptComponent
 	//------------------------------------------------------------------------------------------------
 	//! Server-side RPC handler. Picks an extraction point, settles on a starting
 	//! coordinate (procedural or from registered start points), spawns props and
-	//! guards, teleports players, assigns the extraction task, and (if configured)
-	//! starts the patrol controller. Transitions state from READY -> INPROGRESS.
+	//! guards, assigns the extraction task, schedules a deferred player teleport
+	//! (4 s) via `TeleportPlayersToStart`, and (if configured) starts the patrol
+	//! controller. Transitions state from READY -> INPROGRESS.
 	[RplRpc(RplChannel.Reliable, RplRcver.Server)]
 	protected void StartEscape()
 	{
@@ -208,11 +216,13 @@ class ESC_EscapeManagerComponent : ScriptComponent
 				
 		ESC_EscapeSpawnManager.SpawnPatrolAroundCoordinate(m_startingCord + {10, 0, 0}, m_prisionGuardPrefab, 6, 15);
 		
-		foreach(ref ESC_Player player : ESC_Utils.GetPlayers() )
+		foreach(ref ESC_Player player : ESC_Utils.GetPlayers())
 		{
 			taskSystem.AssignTask(m_extractionTask, player.GetTaskExecutor());
-			player.Teleport(m_startingCord);
 		}
+
+		// Give players a short beat before relocating them to the start coordinate.
+		GetGame().GetCallqueue().CallLater(TeleportPlayersToStart, 4000);
 		
 
 		m_extractionTask.SetOrigin(m_extractionPoint.GetOrigin());
@@ -226,6 +236,18 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		}
 
 		m_escapeStatus = ESC_EscapeStatus.INPROGRESS;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	//! Deferred teleport routine scheduled from `StartEscape`. Relocates every
+	//! registered player to the chosen `m_startingCord` after a short delay so the
+	//! round setup (props, guards, task) has time to settle before players jump.
+	protected void TeleportPlayersToStart()
+	{
+		foreach(ref ESC_Player player : ESC_Utils.GetPlayers())
+		{
+			player.Teleport(m_startingCord);
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -292,5 +314,12 @@ class ESC_EscapeManagerComponent : ScriptComponent
 
 		// After 30 s lets end the game for now.
 		GetGame().GetCallqueue().CallLater(ESC_Utils.EndGame, 5000);
+	}
+	
+	
+	// TODO-DOCS
+	ESC_EscapeStatus GetStatus()
+	{
+		return m_escapeStatus;
 	}
 }
