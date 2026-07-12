@@ -250,6 +250,8 @@ class ESC_EscapeManagerComponent : ScriptComponent
 		{
 			player.Teleport(m_startingCord);
 		}
+		
+		ESC_TheatreComponent.GetInstance().GetHunterGroupController().Start();
 	}
 	
 	//------------------------------------------------------------------------------------------------

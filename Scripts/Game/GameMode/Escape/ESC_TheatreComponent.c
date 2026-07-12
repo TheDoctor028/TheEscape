@@ -50,7 +50,18 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 
 	//! Number of civilian vehicle cycles spawned during world population.
 	protected int m_civTrafficIntensity = 6;
+	
+	//! Civilian character prefab spawned as the driver of each civilian vehicle.
+	[Attribute(uiwidget: UIWidgets.ResourceNamePicker, desc: "OPFOR Prefabs for the hunter group")]
+	protected ref array<ResourceName> m_hunterGroupPrefabs;
+	
+	protected ref ESC_HunterGroupController m_hunterGroupController;
 
+	static ESC_TheatreComponent GetInstance()
+	{
+		return ESC_TheatreComponent.Cast(ESC_EscapeManagerComponent.GetInstance().FindComponent(ESC_TheatreComponent));
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	//! Server init hook. Schedules `InitTheatre` on a small delay so map entities
 	//! are guaranteed available before queries run.
@@ -67,8 +78,14 @@ class ESC_TheatreComponent : ESC_ScriptComponent
 		InitTowns();
 		SpawnActorsToTowns();
 		SpawnCivilianTraffic();
+		m_hunterGroupController = ESC_HunterGroupController(m_hunterGroupPrefabs);
 		//GetGame().GetCallqueue().CallLater(InitTowns, 100);
 		//GetGame().GetCallqueue().CallLater(SpawnActorsToTowns, 500);
+	}
+	
+	ESC_HunterGroupController GetHunterGroupController()
+	{
+		return m_hunterGroupController;
 	}
 
 	//------------------------------------------------------------------------------------------------
